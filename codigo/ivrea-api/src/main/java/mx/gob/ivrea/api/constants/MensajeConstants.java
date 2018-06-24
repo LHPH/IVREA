@@ -1,0 +1,14 @@
+package mx.gob.ivrea.api.constants;
+
+public class MensajeConstants {
+
+    public static final String DEPOSITO_SALDO_EXITOSO = "msg.dep.saldo.exito";
+    public static final String DEPOSITO_SALDO_ERROR = "msg.dep.saldo.error";
+    public static final String RETIRO_SALDO_EXITOSO = "msg.ret.saldo.exito";
+    public static final String RETIRO_SALDO_ERROR = "msg.ret.saldo.error";
+
+    private MensajeConstants() {
+
+    }
+
+}

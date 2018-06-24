@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+
+
+    <!-- Servicios Remotos -->
+    <!-- Servicio Remoto de Ejemplo -->
+    <bean id="holaRemote"
+        class="org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean">
+        <property name="jndiName" value="holaBusiness#mx.gob.ivrea.cajero.interfaces.HolaRemote"/>
+        <property name="businessInterface" value="mx.gob.ivrea.cajero.interfaces.HolaRemote"/>
+    </bean>
+
+    <bean id="clienteRemote"
+        class="org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean">
+            <property name="jndiName" value="clienteBusiness#mx.gob.ivrea.cajero.interfaces.ClienteRemote" />
+            <property name="businessInterface" value="mx.gob.ivrea.cajero.interfaces.ClienteRemote"/>
+    </bean>
+
+    <bean id="saldoRemote"
+        class="org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean">
+            <property name="jndiName" value="saldoBusiness#mx.gob.ivrea.cajero.interfaces.SaldoRemote" />
+            <property name="businessInterface" value="mx.gob.ivrea.cajero.interfaces.SaldoRemote" />
+    </bean>
+
+    <bean id="movimientoRemote"
+        class="org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean">
+            <property name="jndiName" value="movimientoTarjetaBusiness#mx.gob.ivrea.cajero.interfaces.MovimientoTarjetaRemote"/>
+            <property name="businessInterface" value="mx.gob.ivrea.cajero.interfaces.MovimientoTarjetaRemote" />
+    </bean>
+
+
+</beans>

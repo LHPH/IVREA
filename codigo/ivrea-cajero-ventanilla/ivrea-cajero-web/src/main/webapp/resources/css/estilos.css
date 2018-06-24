@@ -1,0 +1,125 @@
+.errorEtiqueta{
+    color:red;
+}
+
+.error{
+    border-color: #a94442;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(169,68,66,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(169,68,66,.6);
+}
+
+.error:focus{
+    border-color: #a94442;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(169,68,66,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(169,68,66,.6);
+}
+
+.areaTrabajo{
+	width: 130%;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 13%;
+}
+
+.header{
+    background-image: url(/ivrea-cajero/resources/img/header.jpg);
+    height: 100px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+}
+
+#headerContainer{
+    font-size: 55px;
+    color: white;
+    padding-left: 80px;
+}
+
+.footer{
+    background-image: url(/ivrea-cajero/resources/img/footer.jpg);
+    background-size: cover;
+    height: 50px;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#tablaFooter{
+    color: white;
+    font-size: 13px;
+    border-collapse: separate;
+    border-spacing: 39px 0;
+    margin-left:19%;
+}
+
+#areaUsuario{
+    
+}
+
+#areaConsultaSaldo{
+    margin-top: 40%;
+    width: 100%;
+    margin-left: 100%;
+    margin-right: 100%;
+}
+
+#areaRetirarSaldo{
+    margin-top: 70%;
+    margin-left: 190%;
+    margin-right:190%;
+    width: 100%;
+}
+
+#areaDepositarSaldo{
+    width: 100%;
+    margin-top: 50%;
+    margin-left: 200%;
+    margin-right: 200%;
+}
+
+#areaConsultaMovimientos{
+    width: 100%;
+    margin-top: 30%;
+    margin-left: 80%;
+    margin-right: 80%;
+}
+
+#areaPagoServicios{
+    width: 100%;
+    margin-top: 50%;
+    margin-left: 200%;
+    margin-right: 200%;
+}
+
+#areaCompraTiempo{
+    width: 100%;
+    margin-top: 50%;
+    margin-left: 200%;
+    margin-right: 200%;
+}
+
+#loginForm{
+    margin-top: 65%;
+    margin-left: 180%;
+    margin-right: 180%;
+    width: 100%;
+}
+
+.valid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #28a745;
+}
+
+#mensajeForm{
+    width: 100%;
+    margin-top: 15%;
+    margin-left: 15%;
+    margin-right: 15%;
+}

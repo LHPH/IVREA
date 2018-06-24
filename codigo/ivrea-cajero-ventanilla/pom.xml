@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>IVREA Cajero Ventanilla</name>
+
+    <parent>
+        <groupId>mx.gob.ivrea</groupId>
+        <artifactId>ivrea</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+
+    <groupId>mx.gob.ivrea</groupId>
+    <artifactId>ivrea-cajero-ventanilla</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
+        <spring.framework.version>3.2.9.RELEASE</spring.framework.version>
+        <spring.security.version>3.2.9.RELEASE</spring.security.version>
+        <spring.test.version>3.2.9</spring.test.version>
+        <junit.version>4.12</junit.version>
+        <jsp.version>3.0</jsp.version>
+        <jstl.version>1.2</jstl.version>
+        <servlet.version>3.0.1</servlet.version>
+        <ejb.version>3.0</ejb.version>
+        <jasper.version>4.1.1</jasper.version>
+        <oracle.version>6</oracle.version>
+        <slf4j.version>1.6.4</slf4j.version>
+        <logback.version>1.0.1</logback.version>
+        <apache.tiles.version>3.0.8</apache.tiles.version>
+        <apache.commons.version>2.6</apache.commons.version>
+         <hibernate.core.version>3.6.9.Final</hibernate.core.version>
+    </properties>
+
+
+    <modules>
+        <module>ivrea-cajero-interfaces</module>
+        <module>ivrea-cajero-servicios</module>
+        <module>ivrea-cajero-packing</module>
+        <module>ivrea-cajero-web</module>
+    </modules>
+
+    <dependencies>
+    
+    <!-- SLF4 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+         <dependency>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+          <version>${logback.version}</version>
+         </dependency>
+         
+         <dependency>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-core</artifactId>
+          <version>${logback.version}</version>
+         </dependency>
+         
+         <!-- Apache Commons -->
+         
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${apache.commons.version}</version>
+        </dependency>
+        
+         <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${apache.commons.version}</version>
+        </dependency>
+         
+
+    <!-- Junit 4 -->
+    <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+     </dependencies>
+</project>

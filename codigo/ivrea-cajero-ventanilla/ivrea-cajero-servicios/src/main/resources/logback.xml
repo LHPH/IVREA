@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <property name="LOGS_HOME" value="C:/Users/ICOLHPH/Documents/ivrea/logs/" />
+  <timestamp key="tiempo" datePattern="yyyyMMddHHmmss"/>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%class{5}] %-5level %logger{5} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_HOME}IVREA-LOG-SERVICIOS.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} %-5level [%class{5}] %logger{36} - %msg%n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>${LOGS_HOME}IVREA-LOGS-SERVICIOS%i.zip</FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>10</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>2MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <appender name="FILE_2" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_HOME}IVREA-LOG-PERSISTENCIA.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} %-5level [%class{5}] %logger{36} - %msg%n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>${LOGS_HOME}IVREA-LOGS-PERSISTENCIA%i.zip</FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>10</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>2MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+
+  <logger name="SERVICIOS" level="DEBUG" additivity="false">
+      <appender-ref ref="STDOUT" />
+      <appender-ref ref="FILE" />
+  </logger>
+
+  <logger name="PERSISTENCIA" level="DEBUG" additivity="false">
+      <appender-ref ref="STDOUT" />
+      <appender-ref ref="FILE_2" />
+  </logger>
+
+
+  <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+      <appender-ref ref="FILE_2" />
+  </logger>
+
+  <logger name="org.hibernate.type.descriptor.sql" level="TRACE" additivity="false">
+      <appender-ref ref="STDOUT" />
+      <appender-ref ref="FILE_2" />
+  </logger>  
+
+
+  <root level="DEBUG">          
+    <appender-ref ref="STDOUT" />
+  </root>  
+  
+</configuration>

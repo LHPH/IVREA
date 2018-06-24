@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>mx.gob.ivrea</groupId>
+        <artifactId>ivrea-cajero-ventanilla</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <name>IVREA Cajero Interfaces</name>
+
+    <groupId>mx.gob.ivrea</groupId>
+    <artifactId>ivrea-cajero-ventanilla-interfaces</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>mx.gob.ivrea</groupId>
+            <artifactId>ivrea-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>mx.gob.ivrea</groupId>
+            <artifactId>ivrea-infraestructura</artifactId>
+            <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-collections</groupId>
+                    <artifactId>commons-collections</artifactId>
+                </exclusion>
+            </exclusions>
+         </dependency>
+        
+        <dependency>
+                <groupId>javax.ejb</groupId>
+                <artifactId>ejb-api</artifactId>
+                <version>${ejb.version}</version>
+                <scope>provided</scope>
+        </dependency>
+        
+    </dependencies>
+
+</project>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+  <definition name="baseLayout" template="/WEB-INF/views/layout/baseLayout.jsp">
+      <put-attribute name="title"  value="IVREA"/>
+      <put-attribute name="header" value="/WEB-INF/views/layout/header.jsp"/>
+      <put-attribute name="menu"   value="/WEB-INF/views/layout/menu.jsp"/>
+      <put-attribute name="body"   value=""/>
+      <put-attribute name="footer"   value="/WEB-INF/views/layout/footer.jsp"/>
+  </definition>
+  
+  <!-- Definicion de Ejemplo -->
+  <definition name="hello" extends="baseLayout">  
+        <put-attribute name="title" value="Hola Spring MVC" />  
+        <put-attribute name="body" value="/WEB-INF/views/hello.jsp" />  
+  </definition>  
+
+  <!--Definicion de Login y Menu -->
+
+  <definition name="login" extends="baseLayout">
+    <put-attribute name="title" value="Login Ivrea-Cajero" />
+    <put-attribute name="body" value="/WEB-INF/views/login.jsp"/>
+  </definition>
+  
+  <definition name="menu" extends="baseLayout">
+    <put-attribute name="title" value="Menu" />
+    <put-attribute name="body" value="/WEB-INF/views/menu.jsp" />
+  </definition>
+
+<!-- Definiciones de Menu-->
+  <definition name="consultaSaldo" extends="baseLayout">
+    <put-attribute name="title" value="Consultar Saldo" />
+    <put-attribute name="body" value="/WEB-INF/views/consulta/consultarSaldo.jsp" />
+  </definition>
+
+  <definition name="retirarSaldo" extends="baseLayout">
+    <put-attribute name="title" value="Retirar Saldo" />
+    <put-attribute name="body" value="/WEB-INF/views/retiro/retirarSaldo.jsp" />
+  </definition>
+
+  <definition name="depositarSaldo" extends="baseLayout">
+    <put-attribute name="title" value="Depositar Saldo" />
+    <put-attribute name="body" value="/WEB-INF/views/deposito/depositarSaldo.jsp" />
+  </definition>
+
+  <definition name="consultaMovimientos" extends="baseLayout">
+    <put-attribute name="title" value="Consultar Movimientos" />
+    <put-attribute name="body" value="/WEB-INF/views/consulta/consultarMovimientos.jsp" />
+  </definition>
+
+  <definition name="transferencia" extends="baseLayout">
+    <put-attribute name="title" value="Transferencia Bancaria" />
+    <put-attribute name="body" value="/WEB-INF/views/deposito/depositarSaldo.jsp" />
+  </definition>
+
+  <definition name="pagarServicios" extends="baseLayout">
+    <put-attribute name="title" value="Pago de Servicios" />
+    <put-attribute name="body" value="/WEB-INF/views/externo/pagoServicios.jsp" />
+  </definition>
+
+  <definition name="compraTiempoAire" extends="baseLayout">
+    <put-attribute name="title" value="Compra Tiempo Aire" />
+    <put-attribute name="body" value="/WEB-INF/views/externo/compraTiempoAire.jsp" />
+  </definition>
+
+  <!--Definicion de mensaje -->
+
+  <definition name="mensaje" extends="baseLayout">
+    <put-attribute name="title" value="IVREA - Mensaje" />
+    <put-attribute name="body" value="/WEB-INF/views/mensaje.jsp" />
+  </definition>  
+  
+  
+</tiles-definitions>
