@@ -14,16 +14,22 @@
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
 
+    <context:component-scan base-package="mx.gob.ivrea.cajero.security"></context:component-scan>
+
     <security:http auto-config="true" use-expressions="true">
         <security:form-login login-page="/login" 
-                             login-processing-url="/ingresar"
+                             login-processing-url="/autenticar"
+                             authentication-success-handler-ref="customAuthenticationSucessHandler"
                              authentication-failure-url="/login?error"
                              username-parameter="campoTarjeta"
 			                 password-parameter="campoNip"
                               />
+        <security:logout  logout-url="/logout"
+                          success-handler-ref="customLogoutSuccessHandler"
+        />
         <security:intercept-url pattern="/menu/**" access="isAuthenticated()"/>                      
-        <security:intercept-url pattern="/**" access="ROLE_USER,ROLE_ANONYMOUS" />
-        
+        <security:intercept-url pattern="/**" access="permitAll" />
+        <security:csrf/>
     </security:http>
 
     <security:authentication-manager>
@@ -31,6 +37,9 @@
         </security:authentication-provider>
     </security:authentication-manager>
 
-    <bean id="customAuthenticationProvider" class="mx.gob.ivrea.cajero.security.AutenticadorProveedor">
+    <bean id="customAuthenticationProvider" class="mx.gob.ivrea.cajero.security.AutenticadorProveedor"/>
 
+    <bean id="customAuthenticationSucessHandler" class="mx.gob.ivrea.cajero.security.AutenticadorSuccessHandler"/>
+
+    <bean id="customLogoutSuccessHandler" class="mx.gob.ivrea.cajero.security.CustomLogoutHandler">
 </beans>

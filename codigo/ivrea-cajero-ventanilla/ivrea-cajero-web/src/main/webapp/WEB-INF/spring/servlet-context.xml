@@ -14,7 +14,7 @@
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
 
-    <context:component-scan base-package="mx.gob.ivrea"></context:component-scan>
+    <context:component-scan base-package="mx.gob.ivrea.cajero.controller"></context:component-scan>
     <mvc:annotation-driven />
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 

@@ -37,7 +37,7 @@ public class LoginController extends BaseController {
         return this.model;
     }
 
-    @RequestMapping(value = IvreaCajeroViewConstants.ACCION_INGRESAR, method = RequestMethod.POST)
+    @RequestMapping(value = IvreaCajeroViewConstants.ACCION_INGRESAR, method = RequestMethod.GET)
     public String ingresar(HttpSession session, HttpServletRequest request, Model model) {
 
         logger.info("Ingresando al sistema");

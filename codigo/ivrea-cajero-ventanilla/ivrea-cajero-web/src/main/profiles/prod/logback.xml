@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <property name="LOGS_HOME" value="C:/Users/ICOLHPH/Documents/ivrea/logs/" />
+  <timestamp key="tiempo" datePattern="yyyyMMddHHmmss"/>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%class{5}] %-5level %logger{5} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_HOME}IVREA-LOG-VISTA.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} %-5level [%class{5}] %logger{36} - %msg%n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>${LOGS_HOME}IVREA-LOGS-VISTA%i.zip</FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>10</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>2MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+
+  <logger name="VISTA" level="INFO" additivity="false">
+      <appender-ref ref="STDOUT" />
+      <appender-ref ref="FILE" />
+  </logger>
+
+  <root level="INFO">          
+    <appender-ref ref="STDOUT" />
+  </root>  
+  
+</configuration>
