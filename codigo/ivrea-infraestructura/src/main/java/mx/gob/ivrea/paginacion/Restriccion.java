@@ -4,6 +4,8 @@ import mx.gob.ivrea.base.BaseModel;
 
 public class Restriccion extends BaseModel {
 
+    private static final long serialVersionUID=13568923429L;
+
     private String nomParametro;
     private Object valor;
 

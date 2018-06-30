@@ -14,4 +14,23 @@
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
 
+    <security:http auto-config="true" use-expressions="true">
+        <security:form-login login-page="/login" 
+                             login-processing-url="/ingresar"
+                             authentication-failure-url="/login?error"
+                             username-parameter="campoTarjeta"
+			                 password-parameter="campoNip"
+                              />
+        <security:intercept-url pattern="/menu/**" access="isAuthenticated()"/>                      
+        <security:intercept-url pattern="/**" access="ROLE_USER,ROLE_ANONYMOUS" />
+        
+    </security:http>
+
+    <security:authentication-manager>
+        <security:authentication-provider ref="customAuthenticationProvider">
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <bean id="customAuthenticationProvider" class="mx.gob.ivrea.cajero.security.AutenticadorProveedor">
+
 </beans>

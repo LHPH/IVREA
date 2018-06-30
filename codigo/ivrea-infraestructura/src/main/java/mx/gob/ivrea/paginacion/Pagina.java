@@ -7,6 +7,8 @@ import mx.gob.ivrea.base.BaseModel;
 
 public class Pagina extends BaseModel {
 
+    private static final long serialVersionUID=238976499969L;
+
     private long totalRegistros;
     private long totalPaginas;
     private long paginaActual;

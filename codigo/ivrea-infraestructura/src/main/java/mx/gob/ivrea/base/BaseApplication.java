@@ -149,4 +149,18 @@ public class BaseApplication {
         return param;
     }
 
+    public String formatoCadena(String cadena){
+        String resultado="";
+
+
+        return resultado;
+    }
+
+    public String agregandoPesos(String cadena){
+        StringBuilder sb = new StringBuilder();
+        sb.append("$");
+        sb.append(cadena);
+        return sb.toString();
+    }
+
 }

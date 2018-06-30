@@ -31,8 +31,8 @@ public class ClienteDAO extends BasePersistence implements ClienteLocal {
         String numTarjeta = model.getCampo1();
         String nip = model.getCampo2();
         criteria = this.getSession().createCriteria(TarjetaEntity.class);
-        criteria.add(Restrictions.eq("numeroTarjeta", model.getCampo1()));
-        criteria.add(Restrictions.eq("nip", model.getCampo2()));
+        criteria.add(Restrictions.eq("numeroTarjeta", numTarjeta));
+        criteria.add(Restrictions.eq("nip", nip));
         criteria.add(Restrictions.eq("activa", EstadoTarjeta.ACTIVA.getValor()));
         TarjetaEntity tarjeta = (TarjetaEntity) criteria.uniqueResult();
         return tarjeta;

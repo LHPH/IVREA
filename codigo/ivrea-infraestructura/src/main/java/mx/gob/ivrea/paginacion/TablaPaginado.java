@@ -1,9 +1,10 @@
 package mx.gob.ivrea.paginacion;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TablaPaginado {
+public class TablaPaginado implements Serializable{
 
     private static final long serialVersionUID = 48938938405L;
     // Numero del primer registro de la tabla

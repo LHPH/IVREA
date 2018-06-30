@@ -4,6 +4,8 @@ import mx.gob.ivrea.base.BaseModel;
 
 public class MovimientoTarjeta extends BaseModel {
 
+    private static final long serialVersionUID=2390758424L;
+
     private String fecha;
     private String concepto;
     private String cantidad;

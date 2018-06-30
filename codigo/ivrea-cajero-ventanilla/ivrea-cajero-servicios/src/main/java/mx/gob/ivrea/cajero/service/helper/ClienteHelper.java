@@ -17,12 +17,10 @@ import mx.gob.ivrea.logger.TipoLogger;
 @Component("clienteHelper")
 public class ClienteHelper extends BaseHelper implements BaseAssembler<ClienteEntity, Cliente> {
 
-    private Logger logger = LoggerFactory.getLogger(TipoLogger.SERVICIOS.name());
-
     @Override
     @LoggerAnnotation(categoria = Categoria.INFO, tipo = TipoLogger.SERVICIOS)
     public Cliente aModel(ClienteEntity entrada) {
-
+        logger.info("Convirtiendo la entidad en modelo: [ClienteEntity]->[Cliente]");
         if (entrada != null) {
             Cliente cliente = new Cliente();
             cliente.setIdCliente(entrada.getCveCliente());

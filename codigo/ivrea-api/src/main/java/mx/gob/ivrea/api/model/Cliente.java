@@ -4,6 +4,8 @@ import mx.gob.ivrea.base.BaseModel;
 
 public class Cliente extends BaseModel {
 
+    private static final long serialVersionUID=234394823429L;
+
     private Long idCliente;
     private String nombre;
     private String direccion;

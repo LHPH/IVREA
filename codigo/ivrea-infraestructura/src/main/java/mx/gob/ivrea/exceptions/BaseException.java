@@ -2,6 +2,8 @@ package mx.gob.ivrea.exceptions;
 
 public class BaseException extends Exception {
 
+    private static final long serialVersionUID=2348798932429L;
+
     public BaseException() {
 
         super();

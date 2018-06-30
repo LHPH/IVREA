@@ -4,6 +4,8 @@ import mx.gob.ivrea.base.BaseModel;
 
 public class Tarjeta extends BaseModel {
 
+    private static final long serialVersionUID=86468536890L;
+
     private String numeroTarjeta;
     private String nip;
     private boolean activa;

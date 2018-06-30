@@ -4,6 +4,8 @@ import mx.gob.ivrea.base.BaseModel;
 
 public class Modelo extends BaseModel {
 
+    private static final long serialVersionUID=267678986629L;
+
     private String campo1;
     private String campo2;
     private String campo3;

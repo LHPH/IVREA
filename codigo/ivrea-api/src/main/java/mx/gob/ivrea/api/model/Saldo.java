@@ -6,6 +6,8 @@ import mx.gob.ivrea.base.BaseModel;
 
 public class Saldo extends BaseModel {
 
+    private static final long serialVersionUID=985753158L;
+
     private Date fecha;
     private String cuenta;
     private String tarjeta;

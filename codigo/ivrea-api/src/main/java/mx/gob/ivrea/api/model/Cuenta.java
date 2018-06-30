@@ -4,6 +4,8 @@ import mx.gob.ivrea.base.BaseModel;
 
 public class Cuenta extends BaseModel {
 
+    private static final long serialVersionUID=2343943097979L;
+
     private String numeroCuenta;
     private String saldo;
     private Tarjeta tarjeta;

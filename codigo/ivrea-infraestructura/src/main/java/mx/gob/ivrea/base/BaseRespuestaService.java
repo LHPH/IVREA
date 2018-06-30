@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class BaseRespuestaService<O, E> implements Serializable {
 
+    private static final long serialVersionUID=20900087654L;
+
     private O objeto;
     private E estatus;
 

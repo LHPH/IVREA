@@ -24,7 +24,7 @@ public class MovimientoTarjetaHelper extends BaseHelper
                 MovimientoTarjeta movTarjeta = new MovimientoTarjeta();
                 Object[] movEntity = entrada.get(cont);
                 movTarjeta.setConcepto(movEntity[0].toString());
-                movTarjeta.setCantidad(movEntity[1].toString());
+                movTarjeta.setCantidad(agregandoPesos(movEntity[1].toString()));
                 movTarjeta.setFecha(
                         this.convertirDate((Date) movEntity[2], FormatosConstants.FORMATO_FECHA_ESPANIOL_HORA));
                 movimientos.add(movTarjeta);
