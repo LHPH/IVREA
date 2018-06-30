@@ -19,8 +19,13 @@ import mx.gob.ivrea.cajero.service.persistence.interfaces.MovimientoTarjetaLocal
 import mx.gob.ivrea.paginacion.Filtro;
 import mx.gob.ivrea.paginacion.Restriccion;
 
+import mx.gob.ivrea.logger.Categoria;
+import mx.gob.ivrea.logger.LoggerAnnotation;
+import mx.gob.ivrea.logger.LoggerInterceptor;
+import mx.gob.ivrea.logger.TipoLogger;
+
 @Stateless(name = "movimientoTarjetaDao", mappedName = "movimientoTarjetaDao")
-@Interceptors({ SpringBeanAutowiringInterceptor.class })
+@Interceptors({ SpringBeanAutowiringInterceptor.class,LoggerInterceptor.class })
 public class MovimientoTarjetaDAO extends BasePersistence implements MovimientoTarjetaLocal {
 
     @Autowired
@@ -29,6 +34,7 @@ public class MovimientoTarjetaDAO extends BasePersistence implements MovimientoT
 
     @SuppressWarnings("unchecked")
     @Override
+    @LoggerAnnotation(categoria = Categoria.INFO, tipo = TipoLogger.PERSISTENCIA)
     public Filtro obtenerMovimientos(Filtro filtro) {
 
         SQLQuery query = this.getSession().createSQLQuery(SQLConstants.CONSULTA_MOVIMIENTOS_TARJETA);

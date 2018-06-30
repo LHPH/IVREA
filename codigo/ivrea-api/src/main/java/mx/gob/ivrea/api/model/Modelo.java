@@ -7,6 +7,7 @@ public class Modelo extends BaseModel {
     private String campo1;
     private String campo2;
     private String campo3;
+    private String campo4;
 
     public String getCampo1() {
 
@@ -36,6 +37,14 @@ public class Modelo extends BaseModel {
     public void setCampo3(String campo3) {
 
         this.campo3 = campo3;
+    }
+
+    public void setCampo4(String campo4){
+        this.campo4=campo4;
+    }
+
+    public String getCampo4(){
+        return this.campo4;
     }
 
 }

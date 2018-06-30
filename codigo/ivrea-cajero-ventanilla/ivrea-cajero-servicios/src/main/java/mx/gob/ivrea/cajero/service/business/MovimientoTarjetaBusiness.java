@@ -20,14 +20,20 @@ import mx.gob.ivrea.paginacion.ConstantsPagination;
 import mx.gob.ivrea.paginacion.Filtro;
 import mx.gob.ivrea.paginacion.Restriccion;
 
+import mx.gob.ivrea.logger.LoggerInterceptor;
+import mx.gob.ivrea.logger.Categoria;
+import mx.gob.ivrea.logger.LoggerAnnotation;
+import mx.gob.ivrea.logger.TipoLogger;
+
 @Stateless(name = "movimientoTarjetaBusiness", mappedName = "movimientoTarjetaBusiness")
-@Interceptors({ SpringBeanAutowiringInterceptor.class })
+@Interceptors({ SpringBeanAutowiringInterceptor.class, LoggerInterceptor.class })
 public class MovimientoTarjetaBusiness extends BaseBusinessService implements MovimientoTarjetaRemote {
 
     @EJB
     MovimientoTarjetaLocal movimientoTarjetaDao;
 
     @Override
+    @LoggerAnnotation(categoria = Categoria.INFO, tipo = TipoLogger.SERVICIOS)
     public BaseRespuestaService<Filtro, EstatusOperacion> obtenerMovimientos(Modelo modelo) {
 
         this.logger.info("Consultando movimientos de la tarjeta");

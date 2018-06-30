@@ -45,7 +45,7 @@ public class LoginController extends BaseController {
         String nip = request.getParameter(ParametrosConstants.CAMPO_NIP);
 
         Modelo modelo = new Modelo();
-        modelo.setCampo1(numTarjeta);
+        modelo.setCampo1(numTarjeta
         modelo.setCampo2(nip);
         Cliente cliente = clienteBusiness.obtenerCliente(modelo);
         if (cliente != null) {

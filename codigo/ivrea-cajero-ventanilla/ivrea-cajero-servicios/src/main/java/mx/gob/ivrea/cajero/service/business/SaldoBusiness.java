@@ -23,16 +23,21 @@ import mx.gob.ivrea.base.BaseBusinessService;
 import mx.gob.ivrea.base.BaseRespuestaService;
 import mx.gob.ivrea.cajero.interfaces.SaldoRemote;
 import mx.gob.ivrea.cajero.service.persistence.interfaces.SaldoLocal;
+import mx.gob.ivrea.cajero.service.persistence.interfaces.CuentaLocal;
+import mx.gob.ivrea.logger.LoggerInterceptor;
 import mx.gob.ivrea.logger.Categoria;
 import mx.gob.ivrea.logger.LoggerAnnotation;
 import mx.gob.ivrea.logger.TipoLogger;
 
 @Stateless(name = "saldoBusiness", mappedName = "saldoBusiness")
-@Interceptors({ SpringBeanAutowiringInterceptor.class })
+@Interceptors({ SpringBeanAutowiringInterceptor.class, LoggerInterceptor.class })
 public class SaldoBusiness extends BaseBusinessService implements SaldoRemote {
 
     @EJB
     SaldoLocal saldoDao;
+
+    @EJB
+    CuentaLocal cuentaDao;
 
     @Autowired
     @Qualifier("saldoHelper")
@@ -61,6 +66,7 @@ public class SaldoBusiness extends BaseBusinessService implements SaldoRemote {
     }
 
     @Override
+    @LoggerAnnotation(categoria = Categoria.INFO, tipo = TipoLogger.SERVICIOS)
     public BaseRespuestaService<Saldo, EstatusOperacion> depositarSaldo(Modelo modelo) {
 
         this.logger.info("Depositar saldo en BD");
@@ -98,6 +104,7 @@ public class SaldoBusiness extends BaseBusinessService implements SaldoRemote {
     }
 
     @Override
+    @LoggerAnnotation(categoria = Categoria.INFO, tipo = TipoLogger.SERVICIOS)
     public BaseRespuestaService<Saldo, EstatusOperacion> retirarSaldo(Modelo modelo) {
 
         this.logger.info("Retirar saldo en BD");
@@ -127,6 +134,50 @@ public class SaldoBusiness extends BaseBusinessService implements SaldoRemote {
             this.logger.info("Se hizo el retiro, estatus [{}]", respuesta.getEstatus());
 
         } catch (Exception e) {
+            respuesta.setObjeto(new Saldo());
+            respuesta.setEstatus(EstatusOperacion.ERROR);
+            this.logger.info("Se hizo la consulta, estatus [{}]", respuesta.getEstatus());
+            this.logger.error(e.getMessage(), e);
+        }
+        return respuesta;
+    }
+
+    @Override
+    @LoggerAnnotation(categoria = Categoria.INFO, tipo = TipoLogger.SERVICIOS)
+    public BaseRespuestaService<Saldo,EstatusOperacion> transferirSaldo(Modelo modelo){
+        logger.info("Transferir saldo");
+        BaseRespuestaService<Saldo, EstatusOperacion> respuesta = new BaseRespuestaService<Saldo, EstatusOperacion>();
+        try{
+           /* CuentaEntity cuenta = saldoDao.obtenerInfoCuenta(modelo);
+            cuenta.setSaldo(Double.parseDouble(modelo.getCampo3()));
+            if (cuenta.getMovimientos() == null) {
+                List<MovimientoEntity> movimientos = new ArrayList<MovimientoEntity>();
+                cuenta.setMovimientos(movimientos);
+            }
+            MovimientoEntity movimiento = new MovimientoEntity();
+            movimiento.setDescripcion(TipoOperacion.DEPOSITO.name());
+            movimiento.setCantidad(modelo.getCampo2());
+            movimiento.setFecha(new Date());
+
+            cuenta.getMovimientos().add(movimiento);
+
+            if (movimiento.getCuenta() == null) {
+                movimiento.setCuenta(cuenta);
+            }
+            saldoDao.actualizarCuenta(cuenta);
+            Saldo saldo = saldoHelper.aModel(cuenta);
+            saldo.setTarjeta(modelo.getCampo1());
+            respuesta.setObjeto(saldo);
+            respuesta.setEstatus(EstatusOperacion.EXITOSO);
+            this.logger.info("Se hizo el deposito, estatus [{}]", respuesta.getEstatus());*/
+            Saldo saldo = new Saldo();
+            saldo.setCuenta("987654321");
+            saldo.setSaldo(500D);
+            respuesta.setObjeto(saldo);
+            respuesta.setEstatus(EstatusOperacion.EXITOSO);
+            this.logger.info("Se hizo el deposito a la cuenta, estatus [{}]", respuesta.getEstatus());
+        }
+        catch(Exception e){
             respuesta.setObjeto(new Saldo());
             respuesta.setEstatus(EstatusOperacion.ERROR);
             this.logger.info("Se hizo la consulta, estatus [{}]", respuesta.getEstatus());

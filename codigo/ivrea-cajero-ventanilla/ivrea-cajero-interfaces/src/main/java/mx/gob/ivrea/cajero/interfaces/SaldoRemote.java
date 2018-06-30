@@ -16,4 +16,6 @@ public interface SaldoRemote {
 
     BaseRespuestaService<Saldo, EstatusOperacion> retirarSaldo(Modelo modelo);
 
+    BaseRespuestaService<Saldo,EstatusOperacion> transferirSaldo(Modelo modelo);
+
 }

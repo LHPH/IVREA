@@ -13,7 +13,8 @@
 
 		<div class="form-group">
 			<label for="campoSaldo"><spring:message code="etiqueta.saldo" /></label>
-			<input type="text" name="campoSaldo" id="campoSaldo" readonly="true" value="${saldo}" class="${clase}" />
+			<fmt:formatNumber type = "number" pattern = "###.##" value = "${saldo}" var="saldoText" />
+			<input type="text" name="campoSaldo" id="campoSaldo" readonly="true" value="${saldoText}" class="${clase}" />
 		</div>
 		<div class="form-group">
 			<label for="campoCantidad"><spring:message code="etiqueta.cantidadRetirar" /></label>

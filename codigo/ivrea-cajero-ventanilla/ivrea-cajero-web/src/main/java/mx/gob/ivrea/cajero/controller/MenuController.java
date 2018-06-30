@@ -187,7 +187,7 @@ public class MenuController extends BaseController {
     }
 
     @RequestMapping(value = IvreaCajeroViewConstants.ACCION_DEPOSITAR_SALDO, method = RequestMethod.POST, params = {
-            "aceptarDeposito" })
+            ParametrosConstants.SUBMIT_DEPOSITAR_SALDO })
     public String depositarSaldoAccion(HttpServletRequest request, HttpSession session, Model model,
             RedirectAttributes redir) {
 
@@ -212,24 +212,30 @@ public class MenuController extends BaseController {
          * saldo.setSaldo(1000D);
          * EstatusOperacion estatus = EstatusOperacion.EXITOSO;
          */
-        if (estatus == EstatusOperacion.EXITOSO) {
-
-            String args = cadenaHelper.unirSubcadenas(String.valueOf(saldo.getSaldo()), saldo.getCuenta());
-
-            redir.addFlashAttribute(ParametrosConstants.MENSAJE, MensajeConstants.DEPOSITO_SALDO_EXITOSO);
-            redir.addFlashAttribute(ParametrosConstants.ARGUMENTOS, args);
-            redir.addFlashAttribute(ParametrosConstants.HAY_BOTON_IMP, true);
-            return new StringBuilder(IvreaConstants.TOKEN_REDIRECT).append(IvreaCajeroViewConstants.VISTA_MENSAJE_EXITO)
-                    .toString();
-        } else {
-            redir.addFlashAttribute(ParametrosConstants.MENSAJE, MensajeConstants.DEPOSITO_SALDO_ERROR);
-            return new StringBuilder(IvreaConstants.TOKEN_REDIRECT).append(IvreaCajeroViewConstants.VISTA_MENSAJE_ERROR)
-                    .toString();
+        switch (estatus) {
+            case EXITOSO:
+                String args = cadenaHelper.unirSubcadenas(String.valueOf(saldo.getSaldo()), saldo.getCuenta());
+                redir.addFlashAttribute(ParametrosConstants.MENSAJE, MensajeConstants.DEPOSITO_SALDO_EXITOSO);
+                redir.addFlashAttribute(ParametrosConstants.ARGUMENTOS, args);
+                redir.addFlashAttribute(ParametrosConstants.HAY_BOTON_IMP, true);
+                return new StringBuilder(IvreaConstants.TOKEN_REDIRECT)
+                        .append(IvreaCajeroViewConstants.VISTA_MENSAJE_EXITO).toString();
+            case ERROR:
+                redir.addFlashAttribute(ParametrosConstants.MENSAJE, MensajeConstants.DEPOSITO_SALDO_ERROR);
+                return new StringBuilder(IvreaConstants.TOKEN_REDIRECT)
+                        .append(IvreaCajeroViewConstants.VISTA_MENSAJE_ERROR).toString();
+            case NO_EXITOSO:
+                redir.addFlashAttribute(ParametrosConstants.HAY_ERROR, true);
+                return new StringBuilder(IvreaConstants.TOKEN_REDIRECT)
+                        .append(IvreaCajeroViewConstants.VISTA_DEPOSITAR_SALDO).toString();
+            default:
         }
+        return null;
+
     }
 
     @RequestMapping(value = IvreaCajeroViewConstants.ACCION_RETIRAR_SALDO, method = RequestMethod.POST, params = {
-            "aceptarRetiro" })
+            ParametrosConstants.SUBMIT_RETIRAR_SALDO })
     public String retirarSaldoAccion(HttpServletRequest request, HttpSession session, Model model,
             RedirectAttributes redir) {
 
@@ -242,25 +248,17 @@ public class MenuController extends BaseController {
         double saldoRetirar = Double.parseDouble(campoSaldoRetirar);
         double saldoDisponible = Double.parseDouble(campoSaldoDisponible);
         modelo.setCampo2(campoSaldoRetirar);
-        modelo.setCampo3(String.valueOf(saldoRetirar - saldoDisponible));
+        modelo.setCampo3(String.valueOf(saldoDisponible-saldoRetirar));
 
-       // BaseRespuestaService<Saldo, EstatusOperacion> respuesta = saldoBusiness.retirarSaldo(modelo);
-        //Saldo saldo = respuesta.getObjeto();
-        //EstatusOperacion estatus = respuesta.getEstatus();
+        BaseRespuestaService<Saldo, EstatusOperacion> respuesta = saldoBusiness.retirarSaldo(modelo);
+        Saldo saldo = respuesta.getObjeto();
+        EstatusOperacion estatus = respuesta.getEstatus();
 
-        
-         Saldo saldo = new Saldo();
+          /*Saldo saldo = new Saldo();
           saldo.setCuenta("1234567");
           saldo.setSaldo(1000D);
           EstatusOperacion estatus = EstatusOperacion.EXITOSO;
-
-          if(saldoRetirar==100){
-            estatus=EstatusOperacion.ERROR;
-          }
-          if(saldoRetirar==200){
-            estatus=EstatusOperacion.NO_EXITOSO;
-          }
-         
+          */
         switch (estatus) {
             case EXITOSO:
                 String args = cadenaHelper.unirSubcadenas(String.valueOf(saldo.getSaldo()), saldo.getCuenta());
@@ -275,7 +273,49 @@ public class MenuController extends BaseController {
                         .append(IvreaCajeroViewConstants.VISTA_MENSAJE_ERROR).toString();
             case NO_EXITOSO:
                 redir.addFlashAttribute(ParametrosConstants.HAY_ERROR, true);
-                return "redirect:" + IvreaCajeroViewConstants.VISTA_RETIRAR_SALDO;
+                return new StringBuilder(IvreaConstants.TOKEN_REDIRECT)
+                        .append(IvreaCajeroViewConstants.VISTA_RETIRAR_SALDO).toString();
+            default:
+        }
+        return null;
+    }
+
+    @RequestMapping(value = IvreaCajeroViewConstants.ACCION_DEPOSITAR_SALDO, method = RequestMethod.POST, params = {
+            ParametrosConstants.SUBMIT_TRANSFERENCIA_SALDO })
+    public String transferenciaSaldoAccion(HttpServletRequest request, HttpSession session, Model model,
+            RedirectAttributes redir) {
+         logger.info("Accion Transferir Saldo a otra cuenta");
+        Modelo modelo = new Modelo();
+        String campoSaldoDepositar = request.getParameter(ParametrosConstants.CAMPO_CANTIDAD);
+        String campoSaldoDisponible = request.getParameter(ParametrosConstants.CAMPO_SALDO);
+        String campoOtraCuenta = request.getParameter(ParametrosConstants.CAMPO_OTRA_CUENTA);
+
+        modelo.setCampo1(session.getAttribute(ParametrosConstants.TARJETA).toString());
+        modelo.setCampo2(campoSaldoDepositar);
+        modelo.setCampo3(campoSaldoDisponible);
+        modelo.setCampo4(campoOtraCuenta);
+
+        BaseRespuestaService<Saldo, EstatusOperacion> respuesta = saldoBusiness.transferirSaldo(modelo);
+        Saldo saldo = respuesta.getObjeto();
+        EstatusOperacion estatus = respuesta.getEstatus();
+
+        switch (estatus) {
+            case EXITOSO:
+                String args = cadenaHelper.unirSubcadenas(String.valueOf(saldo.getSaldo()), saldo.getCuenta());
+                redir.addFlashAttribute(ParametrosConstants.MENSAJE, MensajeConstants.DEPOSITO_SALDO_EXITOSO);
+                redir.addFlashAttribute(ParametrosConstants.ARGUMENTOS, args);
+                redir.addFlashAttribute(ParametrosConstants.HAY_BOTON_IMP, true);
+                return new StringBuilder(IvreaConstants.TOKEN_REDIRECT)
+                        .append(IvreaCajeroViewConstants.VISTA_MENSAJE_EXITO).toString();
+            case ERROR:
+                redir.addFlashAttribute(ParametrosConstants.MENSAJE, MensajeConstants.DEPOSITO_SALDO_ERROR);
+                return new StringBuilder(IvreaConstants.TOKEN_REDIRECT)
+                        .append(IvreaCajeroViewConstants.VISTA_MENSAJE_ERROR).toString();
+            case NO_EXITOSO:
+                redir.addFlashAttribute(ParametrosConstants.HAY_ERROR, true);
+                return new StringBuilder(IvreaConstants.TOKEN_REDIRECT)
+                        .append(IvreaCajeroViewConstants.VISTA_DEPOSITAR_SALDO).toString();
+            default:
         }
         return null;
     }
@@ -295,7 +335,6 @@ public class MenuController extends BaseController {
 
         model.addAttribute(ParametrosConstants.TIPO_MENSAJE, "danger");
         model.addAttribute(ParametrosConstants.NOMBRE_BOTON, "Menu");
-        // model.addAttribute(ParametrosConstants.MENSAJE, msg);
         model.addAttribute(ParametrosConstants.ACCION, IvreaCajeroViewConstants.VISTA_MENU);
         this.model.setViewName(ParametrosConstants.VISTA_MENSAJE);
         return this.model;
@@ -306,7 +345,6 @@ public class MenuController extends BaseController {
 
         model.addAttribute(ParametrosConstants.TIPO_MENSAJE, "info");
         model.addAttribute(ParametrosConstants.NOMBRE_BOTON, "Menu");
-        // model.addAttribute(ParametrosConstants.MENSAJE, msg);
         model.addAttribute(ParametrosConstants.ACCION, IvreaCajeroViewConstants.VISTA_MENU);
         this.model.setViewName(ParametrosConstants.VISTA_MENSAJE);
         return this.model;

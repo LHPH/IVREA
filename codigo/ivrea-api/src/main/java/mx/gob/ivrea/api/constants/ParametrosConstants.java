@@ -17,6 +17,7 @@ public class ParametrosConstants {
     public static final String CAMPO_NIP = "campoNip";
     public static final String CAMPO_CANTIDAD = "campoCantidad";
     public static final String CAMPO_SALDO = "campoSaldo";
+    public static final String CAMPO_OTRA_CUENTA="campoCuentaTercera";
 
     public static final String NOMBRE_CLIENTE = "nombreCliente";
     public static final String NOMBRE_USUARIO = "nombreUsuario";
@@ -36,6 +37,11 @@ public class ParametrosConstants {
     public static final String ARGUMENTOS = "args";
     public static final String HAY_BOTON_IMP = "hayBotonImp";
     public static final String HAY_ERROR="error";
+
+    //INPUT SUBMITS
+    public static final String SUBMIT_DEPOSITAR_SALDO="aceptarDeposito";
+    public static final String SUBMIT_RETIRAR_SALDO="aceptarRetiro";
+    public static final String SUBMIT_TRANSFERENCIA_SALDO="aceptarDepositoTransferencia";
 
     // SQL Parameters
     public static final String PARAM_SQL_NUM_TARJETA = "numTarjeta";

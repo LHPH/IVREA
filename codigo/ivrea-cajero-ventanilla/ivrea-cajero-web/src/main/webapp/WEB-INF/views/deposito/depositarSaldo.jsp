@@ -11,7 +11,8 @@
 		</div>
 		<div class="form-group">
 			<label for="campoSaldo"><spring:message code="etiqueta.saldo" /></label>
-			<input type="text" id="campoSaldo" readonly="true" value="${saldo}" name="campoSaldo" class="form-control" />
+			<fmt:formatNumber type = "number" pattern = "###.##" value = "${saldo}" var="saldoText" />
+			<input type="text" id="campoSaldo" readonly="true" value="${saldoText}" name="campoSaldo" class="form-control" />
 		</div>
 		<c:choose>
 			<c:when test="${tipoOperacion==2}">
@@ -25,6 +26,13 @@
 		<spring:message code="etiqueta.btnRegresar" var="regresar"/>
 		<spring:message code="etiqueta.btnAceptar" var="aceptar"/>
 		<input type="submit" name="btnRegresar" value="${regresar}" class="btn btn-default">
-		<input type="submit" name="aceptarDeposito" value="${aceptar}" class="btn btn-primary" style="margin:10px" onclick="cambiarMetodoEnvio('formDepositarSaldo');" />
+		<c:choose>
+			<c:when test="${tipoOperacion==2}">
+				<input type="submit" name="aceptarDepositoTransferencia" value="${aceptar}" class="btn btn-primary" style="margin:10px" onclick="cambiarMetodoEnvio('formDepositarSaldo');" />
+			</c:when>
+			<c:otherwise>
+				<input type="submit" name="aceptarDeposito" value="${aceptar}" class="btn btn-primary" style="margin:10px" onclick="cambiarMetodoEnvio('formDepositarSaldo');" />
+			</c:otherwise>
+		</c:choose>
 	</form>
 </div>
