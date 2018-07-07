@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,8 @@ import mx.gob.ivrea.api.enums.TipoOperacion;
 import mx.gob.ivrea.api.model.Modelo;
 import mx.gob.ivrea.api.model.MovimientoTarjeta;
 import mx.gob.ivrea.api.model.Saldo;
+import mx.gob.ivrea.api.security.CustomAuthenticationToken;
+import mx.gob.ivrea.api.security.Usuario;
 import mx.gob.ivrea.base.BaseController;
 import mx.gob.ivrea.base.BaseRespuestaService;
 import mx.gob.ivrea.cajero.interfaces.MovimientoTarjetaRemote;
@@ -53,8 +56,9 @@ public class MenuController extends BaseController {
     public ModelAndView entrarMenu(HttpSession session, Model model) {
 
         logger.info("Entrando a menu");
-        model.addAttribute(ParametrosConstants.NOMBRE_USUARIO,
-                session.getAttribute(ParametrosConstants.NOMBRE_CLIENTE));
+        CustomAuthenticationToken auth=(CustomAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario)auth.getPrincipal();
+        model.addAttribute(ParametrosConstants.NOMBRE_USUARIO,user.getNombre());
         this.model.setViewName(ParametrosConstants.VISTA_MENU);
         return this.model;
     }

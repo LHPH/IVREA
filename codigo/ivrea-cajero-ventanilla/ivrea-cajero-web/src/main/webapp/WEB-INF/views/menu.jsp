@@ -2,7 +2,7 @@
 <div id="areaUsuario">
   <strong><spring:message code="etiqueta.usuario" />${nombreUsuario}</strong>
   <br />
-  <a href="#"><spring:message code="etiqueta.cerrarSesion" /></a>
+  <a href="${context}/logout"><spring:message code="etiqueta.cerrarSesion" /></a>
 </div>
 <br />
 <div class="row" style="margin-top: 2%;margin-bottom: 2%;">

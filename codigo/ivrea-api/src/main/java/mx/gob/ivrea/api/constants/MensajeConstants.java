@@ -9,6 +9,9 @@ public class MensajeConstants {
     public static final String TRANSFERENCIA_EXITOSA="msg.tsf.saldo.exito";
     public static final String TRANSFERENCIA_ERROR="msg.tsf.saldo.error";
 
+    public static final String ERROR_AUTENTIFICACION_LOGIN_ERROR="msg.auth.login.error";
+    public static final String ERROR_GENERICO="msg.gen";
+
     private MensajeConstants() {
 
     }

@@ -1,6 +1,7 @@
 package mx.gob.ivrea;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -13,5 +14,6 @@ public class App {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("infraestructura-ivrea.xml");
         // Suma sum = (Suma) ctx.getBean(Suma.class);
         // sum.oper(10, 1);
+        ((ConfigurableApplicationContext)ctx).close();
     }
 }

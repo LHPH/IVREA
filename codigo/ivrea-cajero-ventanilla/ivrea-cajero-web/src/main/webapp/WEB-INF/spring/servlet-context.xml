@@ -49,6 +49,8 @@
             </list>
        </property>
    </bean>
- 
+    
+    <!-- Se crea bean aqui desde infraestructura-->
+    <bean id="cadenaHelper" class="mx.gob.ivrea.utils.CadenaHelper" />
 
 </beans>

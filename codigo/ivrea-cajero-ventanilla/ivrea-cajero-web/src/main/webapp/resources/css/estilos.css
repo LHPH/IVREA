@@ -26,7 +26,7 @@
 .header{
     background-image: url(/ivrea-cajero/resources/img/header.jpg);
     height: 100px;
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 0;
     left: 0;

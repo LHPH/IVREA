@@ -5,14 +5,17 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import mx.gob.ivrea.api.constants.IvreaCajeroViewConstants;
 import mx.gob.ivrea.api.constants.IvreaConstants;
+import mx.gob.ivrea.api.constants.MensajeConstants;
 import mx.gob.ivrea.api.constants.ParametrosConstants;
 import mx.gob.ivrea.api.model.Cliente;
 import mx.gob.ivrea.api.model.Modelo;
@@ -30,10 +33,14 @@ public class LoginController extends BaseController {
     ClienteRemote clienteBusiness;
 
     @RequestMapping(value = IvreaCajeroViewConstants.VISTA_LOGIN, method = RequestMethod.GET)
-    public ModelAndView entrarLogin(HttpSession session, Model model) {
+    public ModelAndView entrarLogin(@RequestParam(value="error",required = false) String error,HttpServletRequest req,Model model) {
 
         logger.info("Entrando a Login");
         this.model.setViewName(ParametrosConstants.VISTA_LOGIN);
+        if(error!=null){
+            logger.info("No se pudo autentificar al usuario");
+            model.addAttribute(ParametrosConstants.MENSAJE, getErrorMensaje(req,"SPRING_SECURITY_LAST_EXCEPTION"));
+        }
         return this.model;
     }
 
@@ -58,6 +65,16 @@ public class LoginController extends BaseController {
         }
         return new StringBuilder(IvreaConstants.TOKEN_REDIRECT).append(IvreaCajeroViewConstants.VISTA_MENU).toString();
 
+    }
+
+    private String getErrorMensaje(HttpServletRequest request, String key){
+        Exception ex = (Exception)request.getSession().getAttribute(key);
+        if(ex instanceof BadCredentialsException){
+            return MensajeConstants.ERROR_AUTENTIFICACION_LOGIN_ERROR;
+        }
+        else{
+            return MensajeConstants.ERROR_GENERICO;
+        }
     }
 
 }

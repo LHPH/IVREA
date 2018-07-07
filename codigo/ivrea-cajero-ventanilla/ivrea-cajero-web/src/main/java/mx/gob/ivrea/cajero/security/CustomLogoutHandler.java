@@ -26,7 +26,7 @@ public class CustomLogoutHandler implements LogoutSuccessHandler{
 			HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
                 logger.info("Cerrando session del usuario");
-                response.sendRedirect("/login");
+                response.sendRedirect("/ivrea-cajero/login");
     }
 
 }

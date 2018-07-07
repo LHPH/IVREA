@@ -16,7 +16,6 @@ public class LoggerAspect {
     @Autowired
     FormatoLogger formato;
 
-    @SuppressWarnings("rawtypes")
     @Before("execution(* mx.gob.ivrea..*.*(..)) && @annotation(logger) ")
     public void registrar(JoinPoint joinPoint, LoggerAnnotation logger) {
 
@@ -27,7 +26,6 @@ public class LoggerAspect {
 
     }
 
-    @SuppressWarnings("rawtypes")
     @AfterReturning(value = "execution(* mx.gob.ivrea..*.*(..)) && @annotation(logger) ", returning = "objReturn")
     public void registrarSalida(JoinPoint joinPoint, LoggerAnnotation logger, Object objReturn) {
 

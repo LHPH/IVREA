@@ -12,11 +12,14 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import mx.gob.ivrea.api.model.Cliente;
 import mx.gob.ivrea.api.model.Modelo;
+import mx.gob.ivrea.api.security.CustomAuthenticationToken;
+import mx.gob.ivrea.api.security.Usuario;
 import mx.gob.ivrea.cajero.interfaces.ClienteRemote;
 
 import mx.gob.ivrea.logger.TipoLogger;
@@ -32,8 +35,9 @@ public class AutenticadorProveedor implements AuthenticationProvider{
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-                String numeroTarjeta = authentication.getName().trim();
-                String nip = authentication.getCredentials().toString().trim();
+                CustomAuthenticationToken customAuth = (CustomAuthenticationToken)authentication;
+                String numeroTarjeta = customAuth.getName().trim();
+                String nip = customAuth.getCredentials().toString().trim();
                 logger.info("Autenticando al usuario");
 
                 Modelo modelo = new Modelo();
@@ -45,21 +49,24 @@ public class AutenticadorProveedor implements AuthenticationProvider{
                         List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
                         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-                        modelo.setCampo1(cliente.getNombre());
-                        modelo.setCampo2(numeroTarjeta);
-                        Authentication auth = new
-                                UsernamePasswordAuthenticationToken(modelo,nip, grantedAuthorities);
+                        Usuario user = new Usuario();
+                        user.setUsername(numeroTarjeta);
+                        user.setPassword(nip);
+                        user.setNombre(cliente.getNombre());
+                        CustomAuthenticationToken auth = new
+                                CustomAuthenticationToken(user,nip, grantedAuthorities,"token");
+
                         logger.info("Se ha autenticado al usuario");
                         return auth;
 
                 } else {
                         this.logger.info("No existe el cliente");
-                        return null;
+                        throw new BadCredentialsException("No existe el cliente");
                 }
 	}
 
 	@Override
 	public boolean supports(Class<?> authentication) {
-		return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
+		return (CustomAuthenticationToken.class.isAssignableFrom(authentication));
 	}
 }
