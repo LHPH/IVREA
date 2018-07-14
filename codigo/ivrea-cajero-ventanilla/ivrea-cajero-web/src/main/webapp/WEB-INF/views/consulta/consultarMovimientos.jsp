@@ -27,7 +27,7 @@
 					</c:choose>
 				</tbody>
 			</table>
-			<div id="page-selection"></div><br />
+			<div id="page-selection"></div>
 			<spring:message code="etiqueta.btnRegresar" var="regresar"/>
 			<input type="submit" name="btnRegresar" value="${regresar}" class="btn btn-default">
 		</form>

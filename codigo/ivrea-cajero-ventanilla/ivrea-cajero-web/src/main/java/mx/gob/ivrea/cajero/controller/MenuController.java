@@ -52,7 +52,7 @@ public class MenuController extends BaseController {
     @Autowired
     CadenaHelper cadenaHelper;
 
-    @RequestMapping(value = IvreaCajeroViewConstants.RAIZ, method = RequestMethod.GET)
+    @RequestMapping(value = {IvreaCajeroViewConstants.RAIZ,""}, method = RequestMethod.GET)
     public ModelAndView entrarMenu(HttpSession session, Model model) {
 
         logger.info("Entrando a menu");
@@ -67,9 +67,11 @@ public class MenuController extends BaseController {
     public ModelAndView consultarSaldo(HttpSession session, Model model) {
 
         logger.info("Consultando saldo");
+        CustomAuthenticationToken auth=(CustomAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario)auth.getPrincipal();
 
         Modelo modelo = new Modelo();
-        modelo.setCampo1(session.getAttribute(ParametrosConstants.TARJETA).toString());
+        modelo.setCampo1(user.getUsername());
         BaseRespuestaService<Saldo, EstatusOperacion> respuesta = saldoBusiness.consultarSaldo(modelo);
 
         Saldo saldo = respuesta.getObjeto();
@@ -88,7 +90,9 @@ public class MenuController extends BaseController {
 
         logger.info("Retirando saldo");
         Modelo modelo = new Modelo();
-        modelo.setCampo1(session.getAttribute(ParametrosConstants.TARJETA).toString());
+        CustomAuthenticationToken auth=(CustomAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario)auth.getPrincipal();
+        modelo.setCampo1(user.getUsername());
         BaseRespuestaService<Saldo, EstatusOperacion> respuesta = saldoBusiness.consultarSaldo(modelo);
 
         Saldo saldo = respuesta.getObjeto();
@@ -103,7 +107,9 @@ public class MenuController extends BaseController {
 
         logger.info("Depositando saldo");
         Modelo modelo = new Modelo();
-        modelo.setCampo1(session.getAttribute(ParametrosConstants.TARJETA).toString());
+        CustomAuthenticationToken auth=(CustomAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario)auth.getPrincipal();
+        modelo.setCampo1(user.getUsername());
         BaseRespuestaService<Saldo, EstatusOperacion> respuesta = saldoBusiness.consultarSaldo(modelo);
 
         Saldo saldo = respuesta.getObjeto();
@@ -122,7 +128,9 @@ public class MenuController extends BaseController {
 
         logger.info("Transferencia bancaria");
         Modelo modelo = new Modelo();
-        modelo.setCampo1(session.getAttribute(ParametrosConstants.TARJETA).toString());
+        CustomAuthenticationToken auth=(CustomAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario)auth.getPrincipal();
+        modelo.setCampo1(user.getUsername());
         BaseRespuestaService<Saldo, EstatusOperacion> respuesta = saldoBusiness.consultarSaldo(modelo);
 
         Saldo saldo = respuesta.getObjeto();
@@ -142,7 +150,9 @@ public class MenuController extends BaseController {
         this.model.setViewName(ParametrosConstants.VISTA_CONSULTA_MOVIMIENTOS);
 
         Modelo modelo = new Modelo();
-        modelo.setCampo1(session.getAttribute(ParametrosConstants.TARJETA).toString());
+        CustomAuthenticationToken auth=(CustomAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario)auth.getPrincipal();
+        modelo.setCampo1(user.getUsername());
         modelo.setCampo2("1");
         BaseRespuestaService<Filtro, EstatusOperacion> respuesta = movimientoTarjetaBusiness.obtenerMovimientos(modelo);
 
@@ -197,7 +207,10 @@ public class MenuController extends BaseController {
 
         logger.info("Accion Depositar Saldo");
         Modelo modelo = new Modelo();
-        modelo.setCampo1(session.getAttribute(ParametrosConstants.TARJETA).toString());
+        //modelo.setCampo1(session.getAttribute(ParametrosConstants.TARJETA).toString());
+        CustomAuthenticationToken auth=(CustomAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario)auth.getPrincipal();
+        modelo.setCampo1(user.getUsername());
         String campoSaldoDepositar = request.getParameter(ParametrosConstants.CAMPO_CANTIDAD);
         String campoSaldoDisponible = request.getParameter(ParametrosConstants.CAMPO_SALDO);
 
@@ -245,7 +258,10 @@ public class MenuController extends BaseController {
 
         logger.info("Accion Retirar Saldo");
         Modelo modelo = new Modelo();
-        modelo.setCampo1(session.getAttribute(ParametrosConstants.TARJETA).toString());
+        //modelo.setCampo1(session.getAttribute(ParametrosConstants.TARJETA).toString());
+        CustomAuthenticationToken auth=(CustomAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario)auth.getPrincipal();
+        modelo.setCampo1(user.getUsername());
         String campoSaldoRetirar = request.getParameter(ParametrosConstants.CAMPO_CANTIDAD);
         String campoSaldoDisponible = request.getParameter(ParametrosConstants.CAMPO_SALDO);
 
@@ -294,7 +310,9 @@ public class MenuController extends BaseController {
         String campoSaldoDisponible = request.getParameter(ParametrosConstants.CAMPO_SALDO);
         String campoOtraCuenta = request.getParameter(ParametrosConstants.CAMPO_OTRA_CUENTA);
 
-        modelo.setCampo1(session.getAttribute(ParametrosConstants.TARJETA).toString());
+        CustomAuthenticationToken auth=(CustomAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario)auth.getPrincipal();
+        modelo.setCampo1(user.getUsername());
         modelo.setCampo2(campoSaldoDepositar);
         modelo.setCampo3(campoSaldoDisponible);
         modelo.setCampo4(campoOtraCuenta);

@@ -17,15 +17,17 @@
 }
 
 .areaTrabajo{
-	width: 130%;
+	/* width: 130%;
     margin-left: 20%;
     margin-right: 20%;
-    margin-top: 13%;
+    margin-top: 13%;*/
 }
 
 .header{
     background-image: url(/ivrea-cajero/resources/img/header.jpg);
     height: 100px;
+    background-size: cover;
+    z-index: 2;
     position: fixed;
     right: 0;
     top: 0;
@@ -61,45 +63,45 @@
 }
 
 #areaConsultaSaldo{
-    margin-top: 40%;
-    width: 100%;
-    margin-left: 100%;
-    margin-right: 100%;
+    margin-top: 1%;
+    width: 35%;
+    margin-left: 35%;
+    margin-right: 35%;
 }
 
 #areaRetirarSaldo{
-    margin-top: 70%;
-    margin-left: 190%;
-    margin-right:190%;
-    width: 100%;
+    margin-top: 1%;
+    margin-left: 35%;
+    margin-right:35%;
+    width: 35%;
 }
 
 #areaDepositarSaldo{
-    width: 100%;
-    margin-top: 50%;
-    margin-left: 200%;
-    margin-right: 200%;
+    width: 35%;
+    margin-top: 1%;
+    margin-left: 35%;
+    margin-right: 35%;
 }
 
 #areaConsultaMovimientos{
-    width: 100%;
-    margin-top: 30%;
-    margin-left: 80%;
-    margin-right: 80%;
+    width: 60%;
+    margin-top: 1%;
+    margin-left: 22%;
+    margin-right: 22%;
 }
 
 #areaPagoServicios{
-    width: 100%;
-    margin-top: 50%;
-    margin-left: 200%;
-    margin-right: 200%;
+    width: 35%;
+    margin-top: 1%;
+    margin-left: 35%;
+    margin-right: 35%;
 }
 
 #areaCompraTiempo{
-    width: 100%;
-    margin-top: 50%;
-    margin-left: 200%;
-    margin-right: 200%;
+    width: 35%;
+    margin-top: 1%;
+    margin-left: 35%;
+    margin-right: 35%;
 }
 
 #loginForm{
@@ -119,7 +121,7 @@
 
 #mensajeForm{
     width: 100%;
-    margin-top: 15%;
-    margin-left: 15%;
-    margin-right: 15%;
+    margin-top: 1%;
+    margin-left: 1%;
+    margin-right: 1%;
 }

@@ -22,7 +22,6 @@ import mx.gob.ivrea.base.BaseAssembler;
 import mx.gob.ivrea.base.BaseBusinessService;
 import mx.gob.ivrea.base.BaseRespuestaService;
 import mx.gob.ivrea.cajero.interfaces.SaldoRemote;
-import mx.gob.ivrea.cajero.service.persistence.interfaces.SaldoLocal;
 import mx.gob.ivrea.cajero.service.persistence.interfaces.CuentaLocal;
 import mx.gob.ivrea.logger.LoggerInterceptor;
 import mx.gob.ivrea.logger.Categoria;
@@ -33,8 +32,6 @@ import mx.gob.ivrea.logger.TipoLogger;
 @Interceptors({ SpringBeanAutowiringInterceptor.class, LoggerInterceptor.class })
 public class SaldoBusiness extends BaseBusinessService implements SaldoRemote {
 
-    @EJB
-    SaldoLocal saldoDao;
 
     @EJB
     CuentaLocal cuentaDao;
@@ -50,7 +47,7 @@ public class SaldoBusiness extends BaseBusinessService implements SaldoRemote {
         this.logger.info("Consultando saldo en BD");
         BaseRespuestaService<Saldo, EstatusOperacion> respuesta = new BaseRespuestaService<Saldo, EstatusOperacion>();
         try {
-            CuentaEntity cuenta = saldoDao.obtenerInfoCuenta(modelo);
+            CuentaEntity cuenta = cuentaDao.obtenerInfoCuentaPorTarjeta(modelo);
             Saldo saldo = saldoHelper.aModel(cuenta);
             saldo.setTarjeta(modelo.getCampo1());
             respuesta.setObjeto(saldo);
@@ -72,7 +69,7 @@ public class SaldoBusiness extends BaseBusinessService implements SaldoRemote {
         this.logger.info("Depositar saldo en BD");
         BaseRespuestaService<Saldo, EstatusOperacion> respuesta = new BaseRespuestaService<Saldo, EstatusOperacion>();
         try {
-            CuentaEntity cuenta = saldoDao.obtenerInfoCuenta(modelo);
+            CuentaEntity cuenta = cuentaDao.obtenerInfoCuentaPorTarjeta(modelo);
             cuenta.setSaldo(Double.parseDouble(modelo.getCampo3()));
             if (cuenta.getMovimientos() == null) {
                 List<MovimientoEntity> movimientos = new ArrayList<MovimientoEntity>();
@@ -88,7 +85,7 @@ public class SaldoBusiness extends BaseBusinessService implements SaldoRemote {
             if (movimiento.getCuenta() == null) {
                 movimiento.setCuenta(cuenta);
             }
-            saldoDao.actualizarCuenta(cuenta);
+            cuentaDao.actualizarCuenta(cuenta);
             Saldo saldo = saldoHelper.aModel(cuenta);
             saldo.setTarjeta(modelo.getCampo1());
             respuesta.setObjeto(saldo);
@@ -110,7 +107,7 @@ public class SaldoBusiness extends BaseBusinessService implements SaldoRemote {
         this.logger.info("Retirar saldo en BD");
         BaseRespuestaService<Saldo, EstatusOperacion> respuesta = new BaseRespuestaService<Saldo, EstatusOperacion>();
         try {
-            CuentaEntity cuenta = saldoDao.obtenerInfoCuenta(modelo);
+            CuentaEntity cuenta = cuentaDao.obtenerInfoCuentaPorTarjeta(modelo);
             cuenta.setSaldo(Double.parseDouble(modelo.getCampo3()));
             if (cuenta.getMovimientos() == null) {
                 List<MovimientoEntity> movimientos = new ArrayList<MovimientoEntity>();
@@ -126,7 +123,7 @@ public class SaldoBusiness extends BaseBusinessService implements SaldoRemote {
                 movimiento.setCuenta(cuenta);
             }
 
-            saldoDao.actualizarCuenta(cuenta);
+            cuentaDao.actualizarCuenta(cuenta);
             Saldo saldo = saldoHelper.aModel(cuenta);
             saldo.setTarjeta(modelo.getCampo1());
             respuesta.setObjeto(saldo);
