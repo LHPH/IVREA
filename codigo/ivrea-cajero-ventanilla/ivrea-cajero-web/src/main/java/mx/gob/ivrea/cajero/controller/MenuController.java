@@ -76,13 +76,18 @@ public class MenuController extends BaseController {
 
         Saldo saldo = respuesta.getObjeto();
         EstatusOperacion estatus = respuesta.getEstatus();
-
-        model.addAttribute(ParametrosConstants.FECHA, new Date());
-        model.addAttribute(ParametrosConstants.CUENTA, saldo.getCuenta());
-        model.addAttribute(ParametrosConstants.TARJETA, saldo.getTarjeta());
-        model.addAttribute(ParametrosConstants.SALDO, saldo.getSaldo());
-        this.model.setViewName(ParametrosConstants.VISTA_CONSULTAR_SALDO);
-        return this.model;
+        estatus = EstatusOperacion.ERROR;
+        switch (estatus) {
+            case EXITOSO:
+                model.addAttribute(ParametrosConstants.FECHA, new Date());
+                model.addAttribute(ParametrosConstants.CUENTA, saldo.getCuenta());
+                model.addAttribute(ParametrosConstants.TARJETA, saldo.getTarjeta());
+                model.addAttribute(ParametrosConstants.SALDO, saldo.getSaldo());
+                this.model.setViewName(ParametrosConstants.VISTA_CONSULTAR_SALDO);
+                return this.model;
+            default:
+                return errorVistaDefault(model);
+        }
     }
 
     @RequestMapping(value = IvreaCajeroViewConstants.VISTA_RETIRAR_SALDO, method = RequestMethod.GET)
@@ -97,9 +102,15 @@ public class MenuController extends BaseController {
 
         Saldo saldo = respuesta.getObjeto();
         EstatusOperacion estatus = respuesta.getEstatus();
-        model.addAttribute(ParametrosConstants.SALDO, saldo.getSaldo());
-        this.model.setViewName(ParametrosConstants.VISTA_RETIRAR_SALDO);
-        return this.model;
+
+        switch (estatus) {
+            case EXITOSO:
+                model.addAttribute(ParametrosConstants.SALDO, saldo.getSaldo());
+                this.model.setViewName(ParametrosConstants.VISTA_RETIRAR_SALDO);
+                return this.model;
+            default:
+                return errorVistaDefault(model);
+        }       
     }
 
     @RequestMapping(value = IvreaCajeroViewConstants.VISTA_DEPOSITAR_SALDO, method = RequestMethod.GET)
@@ -115,12 +126,17 @@ public class MenuController extends BaseController {
         Saldo saldo = respuesta.getObjeto();
         EstatusOperacion estatus = respuesta.getEstatus();
 
-        model.addAttribute(ParametrosConstants.TIPO_OPERACION, TipoOperacion.DEPOSITO.getValor());
-        model.addAttribute(ParametrosConstants.SALDO, saldo.getSaldo());
-        model.addAttribute(ParametrosConstants.CUENTA, saldo.getCuenta());
-
-        this.model.setViewName(ParametrosConstants.VISTA_DEPOSITAR_SALDO);
-        return this.model;
+        switch (estatus) {
+            case EXITOSO:
+                model.addAttribute(ParametrosConstants.TIPO_OPERACION, TipoOperacion.DEPOSITO.getValor());
+                model.addAttribute(ParametrosConstants.SALDO, saldo.getSaldo());
+                model.addAttribute(ParametrosConstants.CUENTA, saldo.getCuenta());
+        
+                this.model.setViewName(ParametrosConstants.VISTA_DEPOSITAR_SALDO);
+                return this.model;
+            default:
+                return errorVistaDefault(model);
+        }              
     }
 
     @RequestMapping(value = IvreaCajeroViewConstants.VISTA_TRANSFERENCIA, method = RequestMethod.GET)
@@ -136,13 +152,20 @@ public class MenuController extends BaseController {
         Saldo saldo = respuesta.getObjeto();
         EstatusOperacion estatus = respuesta.getEstatus();
 
-        model.addAttribute(ParametrosConstants.SALDO, saldo.getSaldo());
-        model.addAttribute(ParametrosConstants.CUENTA, saldo.getCuenta());
-        model.addAttribute(ParametrosConstants.TIPO_OPERACION, TipoOperacion.TRANSFERENCIA.getValor());
-        this.model.setViewName(ParametrosConstants.VISTA_TRANSFERENCIA);
-        return this.model;
+        switch (estatus) {
+            case EXITOSO:
+                model.addAttribute(ParametrosConstants.SALDO, saldo.getSaldo());
+                model.addAttribute(ParametrosConstants.CUENTA, saldo.getCuenta());
+                model.addAttribute(ParametrosConstants.TIPO_OPERACION, TipoOperacion.TRANSFERENCIA.getValor());
+                this.model.setViewName(ParametrosConstants.VISTA_TRANSFERENCIA);
+                return this.model;
+            default:
+                return errorVistaDefault(model);
+        }              
+
     }
 
+    @SuppressWarnings("unchecked")
     @RequestMapping(value = IvreaCajeroViewConstants.VISTA_CONSULTAR_MOVIMIENTOS, method = RequestMethod.GET)
     public ModelAndView consultarMovimientos(HttpSession session, Model model) {
 
@@ -159,9 +182,14 @@ public class MenuController extends BaseController {
         List<MovimientoTarjeta> movimientos = (List<MovimientoTarjeta>) respuesta.getObjeto().getDatos();
         EstatusOperacion estatus = respuesta.getEstatus();
 
-        model.addAttribute(ParametrosConstants.MOVIMIENTOS, movimientos);
-        model.addAttribute(ParametrosConstants.TAMANIO_PAGINA, movimientos.size());
-        return this.model;
+        switch (estatus) {
+            case EXITOSO:
+                model.addAttribute(ParametrosConstants.MOVIMIENTOS, movimientos);
+                model.addAttribute(ParametrosConstants.TAMANIO_PAGINA, movimientos.size());
+                return this.model;
+            default:
+                return errorVistaDefault(model);
+        }           
     }
 
     @RequestMapping(value = IvreaCajeroViewConstants.VISTA_PAGO_SERVICIOS, method = RequestMethod.GET)
@@ -207,7 +235,6 @@ public class MenuController extends BaseController {
 
         logger.info("Accion Depositar Saldo");
         Modelo modelo = new Modelo();
-        //modelo.setCampo1(session.getAttribute(ParametrosConstants.TARJETA).toString());
         CustomAuthenticationToken auth=(CustomAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario)auth.getPrincipal();
         modelo.setCampo1(user.getUsername());
@@ -367,6 +394,15 @@ public class MenuController extends BaseController {
 
         model.addAttribute(ParametrosConstants.TIPO_MENSAJE, "info");
         model.addAttribute(ParametrosConstants.NOMBRE_BOTON, "Menu");
+        model.addAttribute(ParametrosConstants.ACCION, IvreaCajeroViewConstants.VISTA_MENU);
+        this.model.setViewName(ParametrosConstants.VISTA_MENSAJE);
+        return this.model;
+    }
+
+    private ModelAndView errorVistaDefault(Model model){
+        model.addAttribute(ParametrosConstants.TIPO_MENSAJE, "danger");
+        model.addAttribute(ParametrosConstants.NOMBRE_BOTON, "Menu");
+        model.addAttribute(ParametrosConstants.MENSAJE,MensajeConstants.VISTA_NO_DISPONIBLE);
         model.addAttribute(ParametrosConstants.ACCION, IvreaCajeroViewConstants.VISTA_MENU);
         this.model.setViewName(ParametrosConstants.VISTA_MENSAJE);
         return this.model;

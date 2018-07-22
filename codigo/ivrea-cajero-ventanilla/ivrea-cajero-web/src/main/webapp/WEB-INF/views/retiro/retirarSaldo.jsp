@@ -27,10 +27,5 @@
 		<spring:message code="etiqueta.btnAceptar" var="aceptar"/>
 		<input type="submit" name="btnRegresar" value="${regresar}" class="btn btn-default">
 		<input type="submit" name="aceptarRetiro" value="${aceptar}" class="btn btn-primary" style="margin:10px" onclick="cambiarMetodoEnvio('formRetirarSaldo');"/>
-		<!--
-		<script>
-			cargarForm();
-		</script>
-		`-->
 	</form>
 </div>

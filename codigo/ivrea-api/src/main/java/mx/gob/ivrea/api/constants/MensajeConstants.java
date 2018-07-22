@@ -12,6 +12,8 @@ public class MensajeConstants {
     public static final String ERROR_AUTENTIFICACION_LOGIN_ERROR="msg.auth.login.error";
     public static final String ERROR_GENERICO="msg.gen";
 
+    public static final String VISTA_NO_DISPONIBLE="msg.vista.indisponible";
+
     private MensajeConstants() {
 
     }
