@@ -52,5 +52,6 @@
     
     <!-- Se crea bean aqui desde infraestructura-->
     <bean id="cadenaHelper" class="mx.gob.ivrea.utils.CadenaHelper" />
+    <bean id="validadorCampos" class="mx.gob.ivrea.cajero.validador.ValidadorCampos" />
 
 </beans>

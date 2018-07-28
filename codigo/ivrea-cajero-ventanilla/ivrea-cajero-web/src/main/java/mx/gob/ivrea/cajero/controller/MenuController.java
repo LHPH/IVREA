@@ -32,6 +32,7 @@ import mx.gob.ivrea.base.BaseController;
 import mx.gob.ivrea.base.BaseRespuestaService;
 import mx.gob.ivrea.cajero.interfaces.MovimientoTarjetaRemote;
 import mx.gob.ivrea.cajero.interfaces.SaldoRemote;
+import mx.gob.ivrea.cajero.validador.ValidadorCampos;
 import mx.gob.ivrea.constants.ConstantsUtils;
 import mx.gob.ivrea.paginacion.Filtro;
 import mx.gob.ivrea.utils.CadenaHelper;
@@ -51,6 +52,9 @@ public class MenuController extends BaseController {
 
     @Autowired
     CadenaHelper cadenaHelper;
+
+    @Autowired
+    ValidadorCampos validadorCampos;
 
     @RequestMapping(value = {IvreaCajeroViewConstants.RAIZ,""}, method = RequestMethod.GET)
     public ModelAndView entrarMenu(HttpSession session, Model model) {
@@ -234,22 +238,27 @@ public class MenuController extends BaseController {
             RedirectAttributes redir) {
 
         logger.info("Accion Depositar Saldo");
-        Modelo modelo = new Modelo();
         CustomAuthenticationToken auth=(CustomAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario)auth.getPrincipal();
-        modelo.setCampo1(user.getUsername());
+        
         String campoSaldoDepositar = request.getParameter(ParametrosConstants.CAMPO_CANTIDAD);
         String campoSaldoDisponible = request.getParameter(ParametrosConstants.CAMPO_SALDO);
 
         double saldoDepositar = Double.parseDouble(campoSaldoDepositar);
         double saldoDisponible = Double.parseDouble(campoSaldoDisponible);
+
+        Modelo modelo = new Modelo();
+        modelo.setCampo1(user.getUsername());
         modelo.setCampo2(campoSaldoDepositar);
         modelo.setCampo3(String.valueOf(saldoDepositar + saldoDisponible));
 
-        BaseRespuestaService<Saldo, EstatusOperacion> respuesta = saldoBusiness.depositarSaldo(modelo);
-        Saldo saldo = respuesta.getObjeto();
-        EstatusOperacion estatus = respuesta.getEstatus();
-
+        EstatusOperacion estatus = EstatusOperacion.NO_EXITOSO;
+        Saldo saldo = null;
+        if(validadorCampos.validarDatosDepositar(modelo)){
+            BaseRespuestaService<Saldo, EstatusOperacion> respuesta = saldoBusiness.depositarSaldo(modelo);
+            saldo = respuesta.getObjeto();
+            estatus = respuesta.getEstatus();
+        }
         /*
          * Saldo saldo = new Saldo();
          * saldo.setCuenta("1234567");
@@ -297,10 +306,14 @@ public class MenuController extends BaseController {
         modelo.setCampo2(campoSaldoRetirar);
         modelo.setCampo3(String.valueOf(saldoDisponible-saldoRetirar));
 
-        BaseRespuestaService<Saldo, EstatusOperacion> respuesta = saldoBusiness.retirarSaldo(modelo);
-        Saldo saldo = respuesta.getObjeto();
-        EstatusOperacion estatus = respuesta.getEstatus();
+        EstatusOperacion estatus = EstatusOperacion.NO_EXITOSO;
+        Saldo saldo = null;
 
+        if(validadorCampos.validarDatosRetiro(modelo)){
+            BaseRespuestaService<Saldo, EstatusOperacion> respuesta = saldoBusiness.retirarSaldo(modelo);
+            saldo = respuesta.getObjeto();
+            estatus = respuesta.getEstatus();
+        }
           /*Saldo saldo = new Saldo();
           saldo.setCuenta("1234567");
           saldo.setSaldo(1000D);

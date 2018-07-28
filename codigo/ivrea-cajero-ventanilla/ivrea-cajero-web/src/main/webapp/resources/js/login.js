@@ -1,17 +1,25 @@
 function validarLogin(){
 	var numTarjeta = $("#campoTarjeta").val();
-	var nip = $("#campoNip").val();
+    var nip = $("#campoNip").val();
+    var cont=0;
 	if(numTarjeta===null || numTarjeta==='' || !validarNumeroTarjeta(numTarjeta)){
 		$("#campoTarjeta").addClass("is-invalid");
-		return false;
+        cont++;
     }
-    $("#campoTarjeta").removeClass("is-invalid").addClass("is-valid");
+    else{
+        $("#campoTarjeta").removeClass("is-invalid").addClass("is-valid");
+    }
 	if(nip===null || nip==='' || !validarNip(nip)){
 		$("#campoNip").addClass("is-invalid");
-		return false;
+		cont++;
     }
-    $("#campoNip").removeClass("is-invalid").addClass("is-valid");
-	return true;
+    else{
+        $("#campoNip").removeClass("is-invalid").addClass("is-valid");
+    }
+    if(cont===0){
+        return true;
+    }
+	return false;
 }
 
 function validarNumeroTarjeta(tarjeta){

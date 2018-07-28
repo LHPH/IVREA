@@ -1,6 +1,6 @@
 <%@ include file="taglib.jsp" %>
 <div id="loginForm2">
-	<form name="formLogin" id="formLogin" class="needs-validation2" action="autenticar" method="POST"  novalidate>
+	<form name="formLogin" id="formLogin" action="autenticar" method="POST"  novalidate>
 		<div class="form-group">
 			<label for="campoTarjeta"><spring:message code="etiqueta.tarjeta" /></label>
 			<input type="text" class="form-control" id="campoTarjeta" name="campoTarjeta" maxlength="10" placeholder="Numero de tarjeta" required>

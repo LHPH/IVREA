@@ -32,7 +32,6 @@ import mx.gob.ivrea.logger.TipoLogger;
 @Interceptors({ SpringBeanAutowiringInterceptor.class, LoggerInterceptor.class })
 public class SaldoBusiness extends BaseBusinessService implements SaldoRemote {
 
-
     @EJB
     CuentaLocal cuentaDao;
 

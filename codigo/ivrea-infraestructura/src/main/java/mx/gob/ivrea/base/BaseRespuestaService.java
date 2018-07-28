@@ -8,6 +8,7 @@ public class BaseRespuestaService<O, E> implements Serializable {
 
     private O objeto;
     private E estatus;
+    private BaseMessage mensaje;
 
     public BaseRespuestaService() {
 
@@ -37,6 +38,17 @@ public class BaseRespuestaService<O, E> implements Serializable {
     public void setEstatus(E estatus) {
 
         this.estatus = estatus;
+    }
+
+    public void setMensaje(BaseMessage message){
+        this.mensaje = message;
+    }
+
+    public BaseMessage getMensaje(){
+        if(this.mensaje==null){
+            return new BaseMessage();
+        }
+        return this.getMensaje();
     }
 
 }
