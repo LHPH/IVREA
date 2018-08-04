@@ -3,4 +3,7 @@
 .vscode/
 .project
 .classpath
+**/**/.mvn/**
+mvnw
+mvnw.cmd
 logs

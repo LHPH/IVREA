@@ -8,7 +8,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <name>IVREA Cajero Servicios</name>
+    <name>IVREA CAJERO SERVICIOS</name>
 
     <groupId>mx.gob.ivrea</groupId>
     <artifactId>ivrea-cajero-ventanilla-servicios</artifactId>

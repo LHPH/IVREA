@@ -8,7 +8,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <name>IVREA Cajero Packing</name>
+    <name>IVREA CAJERO EMPAQUETADO</name>
 
     <groupId>mx.gob.ivrea</groupId>
     <artifactId>ivrea-cajero-ventanilla-packing</artifactId>

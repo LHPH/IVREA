@@ -8,7 +8,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <name>IVREA Cajero Web</name>
+    <name>IVREA CAJERO WEB</name>
 
     <groupId>mx.gob.ivrea</groupId>
     <artifactId>ivrea-cajero-ventanilla-web</artifactId>

@@ -15,6 +15,12 @@
         <module>ivrea-api</module>
 		<module>ivrea-servicios-comunes</module>
         <module>ivrea-cajero-ventanilla</module>
+		<module>ivrea-ejecutivo-ventanilla</module>
+		<module>ivrea-batch</module>
+		<module>ivrea-ws-clients</module>
+		<!-- Dependencias Externas -->
+		<module>externos-ivrea</module>
+
         
     </modules>
 </project>
