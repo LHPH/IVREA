@@ -1,19 +1,15 @@
 $(document ).ready(function() {
-    $("#formRetirarSaldo").submit(function(event){
-    	if(validarVistaRetirarSaldo()===false){
-    		event.preventDefault();
-    	}
-    });
+   
 });
 
 function validarFormRetiro(saldo,retiro){
-    if(retiro-saldo<0){
+    if(saldo-retiro<0){
         return false;
     }
     return true;
 }
 
-function validarVistaRetirarSaldo(){
+function validarVistaRetirarSaldo(form){
     var saldo=$("#campoSaldo").val();
     var retiro=$("#campoCantidad").val();
     var cont=0;
@@ -38,8 +34,10 @@ function validarVistaRetirarSaldo(){
     else{
         $("#campoSaldo").removeClass("is-invalid").addClass("is-valid");
     }
+    console.log("Ret "+cont);
     if(cont===0){
-        return false; //Cambiar a true
+        cambiarMetodoEnvio(form,'POST');
+        return true; //Cambiar a true
     }
     return false;
 }

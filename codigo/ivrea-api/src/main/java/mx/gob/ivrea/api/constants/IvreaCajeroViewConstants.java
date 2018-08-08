@@ -2,6 +2,7 @@ package mx.gob.ivrea.api.constants;
 
 public class IvreaCajeroViewConstants {
 
+    public static final String SIN_SLASH="";
     public static final String RAIZ = "/";
     public static final String VISTA_MENU = "menu/";
 

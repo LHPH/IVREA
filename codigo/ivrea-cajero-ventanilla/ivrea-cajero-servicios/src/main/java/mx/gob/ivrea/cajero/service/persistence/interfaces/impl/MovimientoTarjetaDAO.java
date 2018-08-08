@@ -48,6 +48,9 @@ public class MovimientoTarjetaDAO extends BasePersistence implements MovimientoT
         List<Object[]> lista = null;
         List<Restriccion> restricciones = filtro.getRestricciones();
 
+        logger.info("Inicio {}",indice);
+        logger.info("Fin {}",filtro.getTamanoPagina());
+
         query.setFirstResult(indice);
         query.setMaxResults(filtro.getTamanoPagina());
         query.setParameter(ParametrosConstants.PARAM_SQL_NUM_TARJETA, restricciones.get(0).getValor());
@@ -74,7 +77,7 @@ public class MovimientoTarjetaDAO extends BasePersistence implements MovimientoT
         SQLQuery query = this.getSession().createSQLQuery(SQLConstants.CONSULTA_NUM_TOTAL_MOVIMIENTOS_TARJETA);
         List<Restriccion> restricciones = filtro.getRestricciones();
         query.setParameter(ParametrosConstants.PARAM_SQL_NUM_TARJETA, restricciones.get(0).getValor());
-        logger.info("Registros recuperados: [{}] "+query.uniqueResult());
+        logger.info("Registros recuperados: [{}] ",query.uniqueResult());
         Long total = Long.parseLong(query.uniqueResult().toString());
         return total.intValue();
     }

@@ -4,8 +4,8 @@ function actualizarBarra(){
         });
     }
 
-function cambiarMetodoEnvio(form){
-    $("#"+form).attr("method", "post");
+function cambiarMetodoEnvio(form,metodo){
+    $("#"+form).attr("method",metodo);
 }
 
 function validarCantidad(cantidad){
@@ -20,7 +20,7 @@ function validarCantidad(cantidad){
 }
 
 function validarNumeroCuenta(cuenta){
-    if(cuenta.length===10){
+    if(cuenta.length===6){
         if(!isNaN(parseInt(cuenta))){
             return true;
         }

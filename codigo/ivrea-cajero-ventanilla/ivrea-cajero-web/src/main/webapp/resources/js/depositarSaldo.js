@@ -1,14 +1,10 @@
 $(document ).ready(function() {
-    $("#formDepositarSaldo").submit(function(event){
-    	if(validarVistaDepositarSaldo()===false){
-    		event.preventDefault();
-    	}
-    });
+   
 });
 
 
 
-function validarVistaDepositarSaldo(){
+function validarVistaDepositarSaldo(form){
 	var saldo=$("#campoSaldo").val();
 	var deposito=$("#campoCantidad").val();
 	var cuenta = $("#campoCuenta").val();
@@ -34,8 +30,10 @@ function validarVistaDepositarSaldo(){
 	else{
 		$("#campoCuenta").removeClass("is-invalid").addClass("is-valid");
 	}
+	console.log("Dep "+cont);
 	if(cont===0){
-		return false; //Cambiar a true
+		cambiarMetodoEnvio(form,'POST');
+		return true; //Cambiar a true
 	}
 	return false;
 }

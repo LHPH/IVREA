@@ -71,6 +71,9 @@ public class Pagina extends BaseModel {
 
     public int getTamanoPagina() {
 
+        if(tamanoPagina==0){
+            tamanoPagina = ConstantsPagination.DEFAULT_TAM_PAGINA;
+        }
         return tamanoPagina;
     }
 

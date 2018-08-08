@@ -2,7 +2,7 @@ package mx.gob.ivrea.paginacion;
 
 public class ConstantsPagination {
 
-    public static final int DEFAULT_TAM_PAGINA = 10;
+    public static final int DEFAULT_TAM_PAGINA = 5;
 
     public static final String ABRE_FILA = "<tr>";
     public static final String CIERRA_FILA = "</tr>";
