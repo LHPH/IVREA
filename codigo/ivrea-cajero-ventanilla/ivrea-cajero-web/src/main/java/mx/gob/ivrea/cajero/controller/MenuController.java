@@ -243,10 +243,13 @@ public class MenuController extends BaseController {
         EstatusOperacion estatus = EstatusOperacion.NO_EXITOSO;
         Saldo saldo = null;
 
+        String campoSaldoDepositar=null;
+        String campoSaldoDisponible=null;
+
         if(validadorCampos.validarDatosDepositar(request)){
 
-            String campoSaldoDepositar = request.getParameter(ParametrosConstants.CAMPO_CANTIDAD);
-            String campoSaldoDisponible = request.getParameter(ParametrosConstants.CAMPO_SALDO);
+            campoSaldoDepositar = request.getParameter(ParametrosConstants.CAMPO_CANTIDAD);
+            campoSaldoDisponible = request.getParameter(ParametrosConstants.CAMPO_SALDO);
     
             double saldoDepositar = Double.parseDouble(campoSaldoDepositar);
             double saldoDisponible = Double.parseDouble(campoSaldoDisponible);
@@ -268,7 +271,7 @@ public class MenuController extends BaseController {
          */
         switch (estatus) {
             case EXITOSO:
-                String args = cadenaHelper.unirSubcadenas(String.valueOf(saldo.getSaldo()), saldo.getCuenta());
+                String args = cadenaHelper.unirSubcadenas(campoSaldoDepositar, saldo.getCuenta(),String.valueOf(saldo.getSaldo()));
                 redir.addFlashAttribute(ParametrosConstants.MENSAJE, MensajeConstants.DEPOSITO_SALDO_EXITOSO);
                 redir.addFlashAttribute(ParametrosConstants.ARGUMENTOS, args);
                 redir.addFlashAttribute(ParametrosConstants.HAY_BOTON_IMP, true);
@@ -297,10 +300,13 @@ public class MenuController extends BaseController {
         EstatusOperacion estatus = EstatusOperacion.NO_EXITOSO;
         Saldo saldo = null;
 
+        String campoSaldoRetirar=null;
+        String campoSaldoDisponible=null;
+
         if(validadorCampos.validarDatosRetiro(request)){
            
-            String campoSaldoRetirar = request.getParameter(ParametrosConstants.CAMPO_CANTIDAD);
-            String campoSaldoDisponible = request.getParameter(ParametrosConstants.CAMPO_SALDO);
+            campoSaldoRetirar = request.getParameter(ParametrosConstants.CAMPO_CANTIDAD);
+            campoSaldoDisponible = request.getParameter(ParametrosConstants.CAMPO_SALDO);
 
             double saldoRetirar = Double.parseDouble(campoSaldoRetirar);
             double saldoDisponible = Double.parseDouble(campoSaldoDisponible);
@@ -321,7 +327,7 @@ public class MenuController extends BaseController {
           */
         switch (estatus) {
             case EXITOSO:
-                String args = cadenaHelper.unirSubcadenas(String.valueOf(saldo.getSaldo()), saldo.getCuenta());
+                String args = cadenaHelper.unirSubcadenas(campoSaldoRetirar, saldo.getCuenta(), String.valueOf(saldo.getSaldo()));
                 redir.addFlashAttribute(ParametrosConstants.MENSAJE, MensajeConstants.RETIRO_SALDO_EXITOSO);
                 redir.addFlashAttribute(ParametrosConstants.ARGUMENTOS, args);
                 redir.addFlashAttribute(ParametrosConstants.HAY_BOTON_IMP, true);
@@ -344,25 +350,36 @@ public class MenuController extends BaseController {
     public String transferenciaSaldoAccion(HttpServletRequest request, HttpSession session, Model model,
             RedirectAttributes redir) {
          logger.info("Accion Transferir Saldo a otra cuenta");
-        Modelo modelo = new Modelo();
-        String campoSaldoDepositar = request.getParameter(ParametrosConstants.CAMPO_CANTIDAD);
-        String campoSaldoDisponible = request.getParameter(ParametrosConstants.CAMPO_SALDO);
-        String campoOtraCuenta = request.getParameter(ParametrosConstants.CAMPO_OTRA_CUENTA);
-
+         
         CustomAuthenticationToken auth=(CustomAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
         Usuario user = (Usuario)auth.getPrincipal();
-        modelo.setCampo1(user.getUsername());
-        modelo.setCampo2(campoSaldoDepositar);
-        modelo.setCampo3(campoSaldoDisponible);
-        modelo.setCampo4(campoOtraCuenta);
 
-        BaseRespuestaService<Saldo, EstatusOperacion> respuesta = saldoBusiness.transferirSaldo(modelo);
-        Saldo saldo = respuesta.getObjeto();
-        EstatusOperacion estatus = respuesta.getEstatus();
+        String campoSaldoDepositar =null;
+        String campoSaldoDisponible = null;
+        String campoOtraCuenta = null;
+        Saldo saldo = null;
+        EstatusOperacion estatus = EstatusOperacion.NO_EXITOSO;
+
+        if(validadorCampos.validarDatosDepositar(request)){
+            campoSaldoDepositar = request.getParameter(ParametrosConstants.CAMPO_CANTIDAD);
+            campoSaldoDisponible = request.getParameter(ParametrosConstants.CAMPO_SALDO);
+            campoOtraCuenta = request.getParameter(ParametrosConstants.CAMPO_OTRA_CUENTA);
+
+            Modelo modelo = new Modelo();
+            modelo.setCampo1(user.getUsername());
+            modelo.setCampo2(campoSaldoDepositar);
+            modelo.setCampo3(campoSaldoDisponible);
+            modelo.setCampo4(campoOtraCuenta);
+
+            BaseRespuestaService<Saldo, EstatusOperacion> respuesta = saldoBusiness.transferirSaldo(modelo);
+            saldo = respuesta.getObjeto();
+            estatus = respuesta.getEstatus();
+
+        }
 
         switch (estatus) {
             case EXITOSO:
-                String args = cadenaHelper.unirSubcadenas(String.valueOf(saldo.getSaldo()), saldo.getCuenta());
+                String args = cadenaHelper.unirSubcadenas(campoSaldoDepositar, saldo.getCuenta(),String.valueOf(saldo.getSaldo()));
                 redir.addFlashAttribute(ParametrosConstants.MENSAJE, MensajeConstants.DEPOSITO_SALDO_EXITOSO);
                 redir.addFlashAttribute(ParametrosConstants.ARGUMENTOS, args);
                 redir.addFlashAttribute(ParametrosConstants.HAY_BOTON_IMP, true);

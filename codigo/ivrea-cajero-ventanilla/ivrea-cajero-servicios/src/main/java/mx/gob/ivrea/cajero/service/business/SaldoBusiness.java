@@ -144,41 +144,16 @@ public class SaldoBusiness extends BaseBusinessService implements SaldoRemote {
         logger.info("Transferir saldo");
         BaseRespuestaService<Saldo, EstatusOperacion> respuesta = new BaseRespuestaService<Saldo, EstatusOperacion>();
         try{
-           /* CuentaEntity cuenta = saldoDao.obtenerInfoCuenta(modelo);
-            cuenta.setSaldo(Double.parseDouble(modelo.getCampo3()));
-            if (cuenta.getMovimientos() == null) {
-                List<MovimientoEntity> movimientos = new ArrayList<MovimientoEntity>();
-                cuenta.setMovimientos(movimientos);
-            }
-            MovimientoEntity movimiento = new MovimientoEntity();
-            movimiento.setDescripcion(TipoOperacion.DEPOSITO.name());
-            movimiento.setCantidad(modelo.getCampo2());
-            movimiento.setFecha(new Date());
 
-            cuenta.getMovimientos().add(movimiento);
-
-            if (movimiento.getCuenta() == null) {
-                movimiento.setCuenta(cuenta);
-            }
-            saldoDao.actualizarCuenta(cuenta);
-            Saldo saldo = saldoHelper.aModel(cuenta);
-            saldo.setTarjeta(modelo.getCampo1());
-            respuesta.setObjeto(saldo);
-            respuesta.setEstatus(EstatusOperacion.EXITOSO);
-            this.logger.info("Se hizo el deposito, estatus [{}]", respuesta.getEstatus());*/
-            Saldo saldo = new Saldo();
-            saldo.setCuenta("987654321");
-            saldo.setSaldo(500D);
-            respuesta.setObjeto(saldo);
-            respuesta.setEstatus(EstatusOperacion.EXITOSO);
-            this.logger.info("Se hizo el deposito a la cuenta, estatus [{}]", respuesta.getEstatus());
         }
         catch(Exception e){
             respuesta.setObjeto(new Saldo());
             respuesta.setEstatus(EstatusOperacion.ERROR);
+            //Mensaje DE ERROR EN EL OBJETO Respuesta
             this.logger.info("Se hizo la consulta, estatus [{}]", respuesta.getEstatus());
             this.logger.error(e.getMessage(), e);
         }
+            
         return respuesta;
     }
 

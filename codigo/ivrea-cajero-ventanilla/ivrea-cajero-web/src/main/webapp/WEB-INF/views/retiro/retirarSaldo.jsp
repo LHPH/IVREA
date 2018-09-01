@@ -25,11 +25,9 @@
         		<spring:message code="etiqueta.cantidad.incorrecto" htmlEscape="false" />
       		</div>
 		</div>
-		<c:if test="${empty error}">
+		<c:if test="${not empty error}">
 			<div class="alert alert-danger" role="alert" style="width: 390px;height: 90px;font-size:14px">
-				No se pudo realizar la operacion debido a un error en los datos.
-				Verifique que sus datos esten correctos. En caso de que esten bien
-				reporte al numero xxx-xxx-xx
+				<spring:message code="msg.vista.datos.error" htmlEscape="false" />
 			</div>
 		</c:if>
 		<spring:message code="etiqueta.btnRegresar" var="regresar"/>

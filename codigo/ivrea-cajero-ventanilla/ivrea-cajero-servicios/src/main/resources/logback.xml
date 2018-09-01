@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-  <property name="LOGS_HOME" value="C:/Users/ICOLHPH/Documents/ivrea/logs/" />
+  <property name="LOGS_HOME" value="C:/Users/luisl/Documents/logs/" />
   <timestamp key="tiempo" datePattern="yyyyMMddHHmmss"/>
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">

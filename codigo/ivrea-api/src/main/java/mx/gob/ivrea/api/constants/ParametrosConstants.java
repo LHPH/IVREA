@@ -45,6 +45,7 @@ public class ParametrosConstants {
 
     // SQL Parameters
     public static final String PARAM_SQL_NUM_TARJETA = "numTarjeta";
+    public static final String PARAM_SQL_NUM_CUENTA="numCuenta";
 
     private ParametrosConstants() {
 

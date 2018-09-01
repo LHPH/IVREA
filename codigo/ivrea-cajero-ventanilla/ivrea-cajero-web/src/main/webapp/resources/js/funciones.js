@@ -11,7 +11,7 @@ function cambiarMetodoEnvio(form,metodo){
 function validarCantidad(cantidad){
     if(!isNaN(cantidad)){
         if(isFinite(cantidad)){
-            if(cantidad>0){
+            if(cantidad>=0){
                 return true;
             }
         }

@@ -3,6 +3,7 @@ package mx.gob.ivrea.cajero.service.persistence.interfaces.impl;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -10,6 +11,7 @@ import mx.gob.ivrea.api.entity.CuentaEntity;
 import mx.gob.ivrea.api.entity.TarjetaEntity;
 import mx.gob.ivrea.api.enums.EstadoTarjeta;
 import mx.gob.ivrea.api.model.Modelo;
+import mx.gob.ivrea.api.constants.SQLConstants;
 import mx.gob.ivrea.base.BasePersistence;
 import mx.gob.ivrea.cajero.service.persistence.interfaces.CuentaLocal;
 import mx.gob.ivrea.logger.Categoria;
@@ -50,6 +52,20 @@ public class CuentaDAO extends BasePersistence implements CuentaLocal {
 
         this.getSession().saveOrUpdate(cuenta);
         this.getSession().flush();
+    }
+
+    @Override
+    @LoggerAnnotation(categoria = Categoria.INFO, tipo = TipoLogger.PERSISTENCIA)
+    public boolean existeNumeroCuenta(String cuenta){
+        SQLQuery query = this.getSession().createSQLQuery(SQLConstants.CONSULTA_EXISTE_NUMERO_CUENTA);
+        return false;
+    }
+
+    @Override
+    @LoggerAnnotation(categoria = Categoria.INFO, tipo = TipoLogger.PERSISTENCIA)
+    public boolean existeNumeroTarjeta(String tarjeta){
+        SQLQuery query = this.getSession().createSQLQuery(SQLConstants.CONSULTA_MOVIMIENTOS_TARJETA);
+        return false;
     }
 
 }

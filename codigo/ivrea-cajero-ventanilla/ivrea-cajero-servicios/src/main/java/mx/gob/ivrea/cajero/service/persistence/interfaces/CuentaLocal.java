@@ -14,4 +14,8 @@ public interface CuentaLocal {
 
     void actualizarCuenta(CuentaEntity cuenta);
 
+    boolean existeNumeroCuenta(String cuenta);
+
+    boolean existeNumeroTarjeta(String tarjeta);
+
 }
