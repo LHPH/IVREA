@@ -34,13 +34,23 @@
 	</div>
 </div>
 <script>
+	$(document ).ready(function() {
+   
+    });
+
 	$('#page-selection').bootpag({
 		total: 10,
 	    maxVisible:3,
 	    activeClass: 'page-item active',
 	    disabledClass: 'page-item disabled'
 	}).on("page", function(event, /* page number here */ num){
-		//$("#content").html("Insert content"); // some ajax content loading...
+		$.post("movimiento",{pag:num})
+		.done(function(response){
+			console.log("Exito ",response);
+		})
+		.fail(function(response){
+			console.log("Error ",response);
+		});
 	});
 	actualizarBarra();
 </script>

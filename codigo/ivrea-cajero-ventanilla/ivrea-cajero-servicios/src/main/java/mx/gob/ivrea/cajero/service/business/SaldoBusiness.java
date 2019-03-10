@@ -144,7 +144,13 @@ public class SaldoBusiness extends BaseBusinessService implements SaldoRemote {
         logger.info("Transferir saldo");
         BaseRespuestaService<Saldo, EstatusOperacion> respuesta = new BaseRespuestaService<Saldo, EstatusOperacion>();
         try{
-
+        	CuentaEntity cuenta = cuentaDao.obtenerInfoCuentaPorTarjeta(modelo);
+        	boolean existeOtraCuenta = cuentaDao.existeNumeroCuenta(modelo.getCampo4());
+        	if(!existeOtraCuenta) {
+        		logger.info("No existe la cuenta a la que se quiere transferir");
+        		
+        	}
+        	
         }
         catch(Exception e){
             respuesta.setObjeto(new Saldo());

@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -35,6 +37,7 @@ import mx.gob.ivrea.cajero.interfaces.SaldoRemote;
 import mx.gob.ivrea.cajero.validador.ValidadorCampos;
 import mx.gob.ivrea.constants.ConstantsUtils;
 import mx.gob.ivrea.paginacion.Filtro;
+import mx.gob.ivrea.paginacion.TablaPaginado;
 import mx.gob.ivrea.utils.CadenaHelper;
 
 @Controller
@@ -45,16 +48,16 @@ public class MenuController extends BaseController {
     private ModelAndView model = new ModelAndView();
 
     @Autowired
-    SaldoRemote saldoBusiness;
+    private SaldoRemote saldoBusiness;
 
     @Autowired
-    MovimientoTarjetaRemote movimientoTarjetaBusiness;
+    private MovimientoTarjetaRemote movimientoTarjetaBusiness;
 
     @Autowired
-    CadenaHelper cadenaHelper;
+    private CadenaHelper cadenaHelper;
 
     @Autowired
-    ValidadorCampos validadorCampos;
+    private ValidadorCampos validadorCampos;
 
     @RequestMapping(value = {IvreaCajeroViewConstants.RAIZ,IvreaCajeroViewConstants.SIN_SLASH}, method = RequestMethod.GET)
     public ModelAndView entrarMenu(HttpSession session, Model model) {
@@ -436,4 +439,15 @@ public class MenuController extends BaseController {
         this.model.setViewName(ParametrosConstants.VISTA_MENSAJE);
         return this.model;
     }
+    
+    @RequestMapping(value="movimiento",method=RequestMethod.POST)
+    @ResponseBody
+    public Object consultarMovimientoPagina(@RequestParam(value = "num", required = true) String pag) {
+    	
+    	TablaPaginado tabla = new TablaPaginado();
+    	logger.info("Se recibe parametro de paginacion {}",pag);
+    	
+    	return tabla;
+    }
+    
 }
