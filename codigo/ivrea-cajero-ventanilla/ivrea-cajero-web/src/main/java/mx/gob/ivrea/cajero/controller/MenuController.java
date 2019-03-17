@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,8 +37,12 @@ import mx.gob.ivrea.cajero.interfaces.MovimientoTarjetaRemote;
 import mx.gob.ivrea.cajero.interfaces.SaldoRemote;
 import mx.gob.ivrea.cajero.validador.ValidadorCampos;
 import mx.gob.ivrea.constants.ConstantsUtils;
+import mx.gob.ivrea.paginacion.Celda;
+import mx.gob.ivrea.paginacion.ConstantsPagination;
+import mx.gob.ivrea.paginacion.Fila;
 import mx.gob.ivrea.paginacion.Filtro;
 import mx.gob.ivrea.paginacion.TablaPaginado;
+import mx.gob.ivrea.paginacion.TipoCelda;
 import mx.gob.ivrea.utils.CadenaHelper;
 
 @Controller
@@ -442,12 +447,58 @@ public class MenuController extends BaseController {
     
     @RequestMapping(value="movimiento",method=RequestMethod.POST)
     @ResponseBody
-    public Object consultarMovimientoPagina(@RequestParam(value = "num", required = true) String pag) {
+    public String consultarMovimientoPagina(@RequestParam(value = "pag", required = true) String pag) {
     	
     	TablaPaginado tabla = new TablaPaginado();
     	logger.info("Se recibe parametro de paginacion {}",pag);
     	
-    	return tabla;
+    	 Modelo modelo = new Modelo();
+         CustomAuthenticationToken auth=(CustomAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
+         Usuario user = (Usuario)auth.getPrincipal();
+         modelo.setCampo1(user.getUsername());
+         modelo.setCampo2(pag);
+         BaseRespuestaService<Filtro, EstatusOperacion> respuesta = movimientoTarjetaBusiness.obtenerMovimientos(modelo);
+
+         List<MovimientoTarjeta> movimientos = (List<MovimientoTarjeta>) respuesta.getObjeto().getDatos();
+         EstatusOperacion estatus = respuesta.getEstatus();
+
+         switch (estatus) {
+             case EXITOSO:
+            	 
+                List<Fila> filas = new ArrayList<Fila>();	 
+                for(MovimientoTarjeta mov: movimientos) {
+                	Fila fila = new Fila();
+                	List<Celda> celdas = new ArrayList<Celda>();
+                	
+                	Celda celda1 = new Celda(mov.getFecha(),TipoCelda.TEXTO);
+                	Celda celda2 = new Celda(mov.getConcepto(),TipoCelda.TEXTO);
+                	Celda celda3 = new Celda(mov.getCantidad(),TipoCelda.TEXTO);
+                	
+                	celdas.add(celda1);
+                	celdas.add(celda2);
+                	celdas.add(celda3);
+                	
+                	fila.setCeldas(celdas);
+                	filas.add(fila);
+                }
+                tabla.setFilas(filas);
+                
+                int numPag = Integer.parseInt(pag);
+                
+                tabla.setTotal(movimientos.size());
+                tabla.setNumInicio(ConstantsPagination.DEFAULT_TAM_PAGINA*(numPag-1)+1);
+                tabla.setNumFinal(ConstantsPagination.DEFAULT_TAM_PAGINA*numPag);
+                return tabla.construirTabla();
+             default:
+            	 return null;
+                 
+         }           
+    }
+    
+    @ExceptionHandler(Exception.class)
+    public ModelAndView sendError(Exception exc) {
+    	logger.error("************** ERROR **************",exc);
+    	return null;
     }
     
 }

@@ -47,6 +47,7 @@
 		$.post("movimiento",{pag:num})
 		.done(function(response){
 			console.log("Exito ",response);
+			console.log(response);
 		})
 		.fail(function(response){
 			console.log("Error ",response);

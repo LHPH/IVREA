@@ -15,6 +15,7 @@
 
 
     <context:component-scan base-package="mx.gob.ivrea.cajero.controller"></context:component-scan>
+    <context:annotation-config/> 
     <mvc:annotation-driven />
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 
@@ -53,5 +54,15 @@
     <!-- Se crea bean aqui desde infraestructura-->
     <bean id="cadenaHelper" class="mx.gob.ivrea.utils.CadenaHelper" />
     <bean id="validadorCampos" class="mx.gob.ivrea.cajero.validador.ValidadorCampos" />
+
+	<!-- Bean mapper de Jackson  -->
+	<bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+		  <list>
+		    <ref bean="jacksonMessageConverter"/>
+		  </list>
+		</property>
+	</bean>
 
 </beans>

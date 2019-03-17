@@ -36,6 +36,7 @@
         <apache.tiles.version>3.0.8</apache.tiles.version>
         <apache.commons.version>2.6</apache.commons.version>
         <hibernate.core.version>3.6.9.Final</hibernate.core.version>
+        <jackson.version>2.6.3</jackson.version>
     </properties>
 
 
