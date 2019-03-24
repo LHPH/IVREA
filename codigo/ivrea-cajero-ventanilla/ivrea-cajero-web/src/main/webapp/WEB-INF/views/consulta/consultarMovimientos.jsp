@@ -27,6 +27,7 @@
 					</c:choose>
 				</tbody>
 			</table>
+			<div id="msgConsultaMov"></div>
 			<div id="page-selection"></div>
 			<spring:message code="etiqueta.btnRegresar" var="regresar"/>
 			<input type="submit" name="btnRegresar" value="${regresar}" class="btn btn-default">
@@ -38,20 +39,34 @@
    
     });
 
-	$('#page-selection').bootpag({
-		total: 10,
-	    maxVisible:3,
-	    activeClass: 'page-item active',
-	    disabledClass: 'page-item disabled'
-	}).on("page", function(event, /* page number here */ num){
-		$.post("movimiento",{pag:num})
-		.done(function(response){
-			console.log("Exito ",response);
-			console.log(response);
-		})
-		.fail(function(response){
-			console.log("Error ",response);
+	function loadPaginationBar(totalPag){
+
+		console.log('Total paginas ',totalPag);
+		var maxVisible=3;
+		if(totalPag<maxVisible){
+			maxVisible = totalPag;
+		}
+
+		$('#page-selection').bootpag({
+			total: totalPag,
+			maxVisible: maxVisible,
+			activeClass: 'page-item active',
+			disabledClass: 'page-item disabled'
+		}).on("page", function(event, /* page number here */ num){
+			$.post("movimiento",{pag:num})
+			.done(function(response){
+				//$('#tablaMovimientos').find("tr:gt(0)").remove();
+				$('#tablaMovimientos > tbody').empty();
+				$('#tablaMovimientos > tbody').append(response);
+				
+			})
+			.fail(function(response){
+				console.log(response);
+				$('#msgConsultaMov').append('<div class="alert alert-danger" role="alert" style="width: 390px;height: 90px;font-size:14px">Ocurrio un problema al cargar registros</div>');
+			});
 		});
-	});
+	}
+
+	loadPaginationBar("${totalPaginas}");
 	actualizarBarra();
 </script>

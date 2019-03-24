@@ -1,5 +1,7 @@
 package mx.gob.ivrea.cajero.service.persistence.interfaces.impl;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
 
@@ -11,6 +13,7 @@ import mx.gob.ivrea.api.entity.CuentaEntity;
 import mx.gob.ivrea.api.entity.TarjetaEntity;
 import mx.gob.ivrea.api.enums.EstadoTarjeta;
 import mx.gob.ivrea.api.model.Modelo;
+import mx.gob.ivrea.api.constants.ParametrosConstants;
 import mx.gob.ivrea.api.constants.SQLConstants;
 import mx.gob.ivrea.base.BasePersistence;
 import mx.gob.ivrea.cajero.service.persistence.interfaces.CuentaLocal;
@@ -23,7 +26,7 @@ import mx.gob.ivrea.logger.TipoLogger;
 @Interceptors({ LoggerInterceptor.class })
 public class CuentaDAO extends BasePersistence implements CuentaLocal {
 
-    Criteria criteria;
+    private Criteria criteria;
 
     @Override
     @LoggerAnnotation(categoria = Categoria.INFO, tipo = TipoLogger.PERSISTENCIA)
@@ -58,14 +61,22 @@ public class CuentaDAO extends BasePersistence implements CuentaLocal {
     @LoggerAnnotation(categoria = Categoria.INFO, tipo = TipoLogger.PERSISTENCIA)
     public boolean existeNumeroCuenta(String cuenta){
         SQLQuery query = this.getSession().createSQLQuery(SQLConstants.CONSULTA_EXISTE_NUMERO_CUENTA);
-        return false;
+        query.setParameter(ParametrosConstants.PARAM_SQL_NUM_CUENTA,cuenta);
+        List list=query.list();
+        Object obj=list.get(0);
+        int num=Integer.parseInt(obj.toString());
+        return num==0?false:true;
     }
 
     @Override
     @LoggerAnnotation(categoria = Categoria.INFO, tipo = TipoLogger.PERSISTENCIA)
     public boolean existeNumeroTarjeta(String tarjeta){
-        SQLQuery query = this.getSession().createSQLQuery(SQLConstants.CONSULTA_MOVIMIENTOS_TARJETA);
-        return false;
+        SQLQuery query = this.getSession().createSQLQuery(SQLConstants.CONSULTA_EXISTE_NUMERO_TARJETA);
+        query.setParameter(ParametrosConstants.PARAM_SQL_NUM_TARJETA, tarjeta);
+        List list=query.list();
+        Object obj=list.get(0);
+        int num=Integer.parseInt(obj.toString());
+        return num==0?false:true;
     }
 
 }

@@ -196,6 +196,9 @@ public class MenuController extends BaseController {
         switch (estatus) {
             case EXITOSO:
                 model.addAttribute(ParametrosConstants.MOVIMIENTOS, movimientos);
+                respuesta.getObjeto().getTotalPaginas();
+                logger.info("Total Paginas {}",respuesta.getObjeto().getTotalPaginas());
+                model.addAttribute(ParametrosConstants.TOTAL_PAGINAS,2);
                 model.addAttribute(ParametrosConstants.TAMANIO_PAGINA, movimientos.size());
                 return this.model;
             default:
@@ -400,7 +403,7 @@ public class MenuController extends BaseController {
             case NO_EXITOSO:
                 redir.addFlashAttribute(ParametrosConstants.HAY_ERROR, true);
                 return new StringBuilder(IvreaConstants.TOKEN_REDIRECT)
-                        .append(IvreaCajeroViewConstants.VISTA_DEPOSITAR_SALDO).toString();
+                        .append(IvreaCajeroViewConstants.VISTA_TRANSFERENCIA).toString();
             default:
         }
         return null;

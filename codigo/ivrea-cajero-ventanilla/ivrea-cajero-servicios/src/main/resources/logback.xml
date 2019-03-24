@@ -60,6 +60,14 @@
       <appender-ref ref="STDOUT" />
       <appender-ref ref="FILE_2" />
   </logger>  
+  
+  <logger name="java.sql" level="DEBUG" additivity="false">
+      <appender-ref ref="FILE_2" />
+  </logger>  
+  
+  <logger name="org.hibernate.util" level="ERROR" additivity="false">
+  	 <appender-ref ref="FILE_2" />
+  </logger>
 
 
   <root level="DEBUG">          

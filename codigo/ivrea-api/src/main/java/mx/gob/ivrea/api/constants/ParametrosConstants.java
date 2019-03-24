@@ -30,6 +30,7 @@ public class ParametrosConstants {
     public static final String PROVEEDORES = "proveedores";
     public static final String SERVICIOS = "servicios";
     public static final String TAMANIO_PAGINA = "tamanioPagina";
+    public static final String TOTAL_PAGINAS="totalPaginas";
     public static final String TIPO_MENSAJE = "tipoMensaje";
     public static final String NOMBRE_BOTON = "nombreBoton";
     public static final String ACCION = "accion";
